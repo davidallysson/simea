@@ -1,0 +1,46 @@
+@(alternativas: List[Answer])
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("Profile", "", extraScripts= Html("")){
+    @utils.panel("Campus"){
+        <div class="x_content">
+       		 <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search" >
+                  <div class="input-group" style="float:right;">
+                    <a href="@routes.QuestaoController.formulario" class="btn btn-default btn-lg"><i class="btn btn-default btn-lg"></i>Cadastrar</a>
+                  </div>
+                </div>
+              </div>
+              <br>
+            @if(alternativas.size == 0) {
+				<h3>Nenhuma alternativa foi cadastrada.</h3>
+			} else {
+				@for(alternativa <- alternativas) {
+					<div class="item-lista">
+						<div class="item-lista">
+							<div class="item">
+								<h2>
+									<a href="@routes.QuestaoController.visualizar(alternativa.id)">
+										@alternativa.answer 
+									</a>
+								</h2>
+								<div style=" padding-top:10px;">
+									<a href="@routes.CampusController.visualizar(alternativa.id)" class="btn btn-primary"><i class="icon-white icon-list-alt"></i> Visualizar</a>
+									
+									@if(isLogado()) { 
+										@if(getUsuarioLogado().isAdministrador) {
+											<a href="@routes.CampusController.editar(alternativa.id)" class="btn"><i class="icon-edit"></i> Editar</a>
+											<a href="@routes.CampusController.deletar(alternativa.id)" onclick="return confirm('Deseja realmente excluir o campus &quot;@alternativa.answer&quot;?')" class="btn"><i class="icon-remove"></i> Excluir</a>
+										} 
+									} 
+								</div>
+							 <br /><br />
+							</div> 
+						</div>
+					</div>
+				 }
+           } 
+        </div>
+    }
+}

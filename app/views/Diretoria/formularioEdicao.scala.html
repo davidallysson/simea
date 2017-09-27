@@ -1,0 +1,31 @@
+@(diretoriaForm: Form[Diretoria], diretoria: Diretoria, campus: List[Campus])
+
+@base("Profile", "Profile", extraScripts= Html("")){
+    @utils.panel("Diretoria"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.DiretoriaController.editar(diretoria.id), 'class -> "form-horizontal form-label-left" , 'id -> "editDiretoria" ) {
+
+            @utils.formInput("Campus:", "nome" , diretoria.nome)
+            <div class="form-group" id="idCampus_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idCampus" id="idCampus" >
+                          <option selected hidden>Escolha uma opção</option>
+	                            @for(campi <- campus) {
+								  <option value="@campi.id">@campi.nome</option>
+								}
+                          </select>
+                      </div>
+                 </div>
+            <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Editar</button>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+}

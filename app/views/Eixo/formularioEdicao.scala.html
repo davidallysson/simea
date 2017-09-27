@@ -1,0 +1,21 @@
+@(eixoForm: Form[Eixo], eixo: Eixo)
+
+@base("Profile", "Profile", extraScripts= Html("")){
+    @utils.panel("Eixo"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.EixoController.editar(eixo.id), 'class -> "form-horizontal form-label-left" , 'id -> "editEixo" ) {
+
+            @utils.formInput("Campus:", "nome" , eixo.nome)
+
+            <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Editar</button>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+}

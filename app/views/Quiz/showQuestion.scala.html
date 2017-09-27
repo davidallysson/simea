@@ -1,0 +1,43 @@
+@*
+
+- View que apresenta o questionario com as alternativas de escolha.
+
+*@
+
+@(q: Questao, solutionId: Long) 
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("Profile", "", extraScripts= Html("")){
+    @utils.panel("Administradores"){
+    	
+  			<div style="text-align: left;">
+				<div style="width: 950px; margin: 0 auto;">
+					<br /> <br /> 
+					@*<h3>@Html(q.question)</h3>*@
+					<h3>@(q.pergunta)</h3>
+					<br /> <br /> 				
+				</div>
+ 			</div>
+			
+  
+		  <div style="text-align: left;">
+					<div style="width: 900px; margin: 0 auto;">
+				   <form class="form-horizontal" action="/solutions/@(solutionId)" method="POST">
+					<input type="hidden" name="id" value="@q.id" />
+					
+					@q.getAnswers().map { a =>
+				      @answers(a)
+				    }
+				
+					<div class="control-group">
+						<div class="controls">
+						<br />
+							<button type="submit" class="btn">Continuar</button>
+						</div>
+					</div>
+				  </form>
+		  		</div>
+		 </div>
+  }
+}

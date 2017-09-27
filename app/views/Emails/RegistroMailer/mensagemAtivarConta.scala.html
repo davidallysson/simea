@@ -1,0 +1,20 @@
+@(usuario: Usuario)
+
+@layoutEmail {
+	@*
+	<p>Olá <strong>@usuario.nome</strong>, seu cadastro no Primo Nerd já foi criado no dia @usuario.dataCadastro !</p>
+	<p>
+		Para poder desfrutar de todas as funcionalidades do sistema é preciso ativar sua conta.<br/>
+		Clique no link abaixo para ativá-la agora mesmo!<br/>
+		
+		<a href="@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)">@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)</a>
+	</p>
+	
+	<br/>
+	<p>
+		Atenciosamente, <br/> 
+		Equipe Primo Nerd
+	</p>
+	
+	*@
+}

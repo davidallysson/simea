@@ -1,0 +1,46 @@
+@(cursos: List[Curso])
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("Profile", "Profile", extraScripts= Html("")){
+    @utils.panel("Cursos"){
+        <div class="x_content">
+       		 <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search" >
+                  <div class="input-group" style="float:right;">
+                    <a href="@routes.CursoController.formulario" class="btn btn-default btn-lg"><i class="btn btn-default btn-lg"></i>Cadastrar</a>
+                  </div>
+                </div>
+              </div>
+              <br>
+            @if(cursos.size == 0) {
+				<h3>Nenhum curso cadastrada.</h3>			
+			} else {
+				@for(curso <- cursos) {
+					<div class="item-lista">
+						<div class="item-lista">
+							<div class="item">
+								<h2>
+									<a href="@routes.CursoController.visualizar(curso.id)">
+										@curso.nome 
+									</a>
+								</h2>
+								<div style=" padding-top:10px;">
+									<a href="@routes.CursoController.visualizar(curso.id)" class="btn btn-primary"><i class="icon-white icon-list-alt"></i> Visualizar</a>
+									
+									@if(isLogado()) { 
+										@if(getUsuarioLogado().isAdministrador) {
+											<a href="@routes.CursoController.editar(curso.id)" class="btn"><i class="icon-edit"></i> Editar</a>
+											<a href="@routes.CursoController.deletar(curso.id)" onclick="return confirm('Deseja realmente excluir a diretoria &quot;@curso.nome&quot;?')" class="btn"><i class="icon-remove"></i> Excluir</a>
+										} 
+									} 
+								</div>
+							 <br /><br />
+							</div> 
+						</div>
+					</div>
+				 }
+           } 
+        </div>
+    }
+}

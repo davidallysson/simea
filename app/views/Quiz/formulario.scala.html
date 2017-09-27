@@ -1,0 +1,20 @@
+@(quiz: Form[Quiz])
+
+@base("Profile", "", extraScripts= Html("")){
+    @utils.panel("Questionarios"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.QuizController.cadastrar(), 'class -> "form-horizontal form-label-left" , 'id -> "editUser" ) {
+
+       			@utils.formInput("Questionario:","name")
+				@utils.formInput("Categoria:","category")
+           		<div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

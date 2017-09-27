@@ -1,0 +1,185 @@
+@(alunoForm: Form[Usuario], aluno: Usuario, turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus])
+
+@base("SIMEA - Sistema de Monitoramento de Evas�o de Alunos", "", extraScripts= Html("")){
+    @utils.panel("Aluno"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.AlunoController.editar(aluno.id), 'class -> "form-horizontal form-label-left" , 'id -> "editTurma" ) {
+         		@utils.formInput("Nome:","nome", aluno.nome)
+       			@utils.formInput("E-mail:","email", aluno.email)
+       			@utils.formInput("Matricula:","matricula", aluno.matricula)
+       			<div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Password:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="password" class="form-control" id="password" name="password" >
+                      </div>
+                </div>
+           		<div class="form-group" id="idCampus_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
+	                            <option selected hidden>Escolha uma opcao</option>
+	                            @for(campi <- campus) {
+							 		 <option value="@campi.id">@campi.nome</option>
+								}
+                          </select>
+                      </div>
+                 </div>
+                 
+				<div class="form-group" id="idDiretoria_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >
+	                             <option selected hidden>Escolha uma opcao</option>
+                          </select>
+                      </div>
+                 </div>
+                 
+                 <div class="form-group" id="idCurso_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idCurso" id="idCurso"  onchange="configureDropDownListsTurmas(this,document.getElementById('idTurma'))">
+	                             <option selected hidden>Escolha uma opcao</option>
+                          </select>
+                      </div>
+                 </div>
+                 <div class="form-group" id="idTurma_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idTurma" id="idTurma" >
+	                            <option selected hidden>Escolha uma opcao</option>
+                          </select>
+                      </div>
+                 </div>
+            <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Editar</button>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+}
+
+
+<script type="text/javascript" src="@routes.CursoController.javascriptRoutes"></script>
+<script type="text/javascript">
+
+var plus = function() {
+    var num1 = $('#num1').val();
+    var num2 = $('#num2').val();
+
+    jsRoutes.controllers.DiretoriaController.index(ddl1.value).ajax({
+      success: function(data) {
+        $("#result").html(data);
+      },
+      error: function() {
+        alert("Error!")
+      }
+    })
+  };
+
+ function configureDropDownLists(ddl1,ddl2) {
+	 this.idDiretoria.options.length=0;
+	  var colours = new Array('Black', 'White', 'Blue');
+	 jsRoutes.controllers.DiretoriaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, " ---- Escolha uma diretoria ----", "0");
+            for (i = 0; i < data.length; i++) {
+                createOption(ddl2, data[i].nome, data[i].id);
+            }
+            
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+	 
+        var shapes = new Array('Square', 'Circle', 'Triangle');
+        var names = new Array('John', 'David', 'Sarah');
+      
+    }
+
+ function configureDropDownListsCursos(ddl1,ddl2) {
+	 this.idCurso.options.length=0;
+	 console.log("test Cursos");
+	 jsRoutes.controllers.CursoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um curso ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsTurmas(ddl1,ddl2) {
+	 this.idTurma.options.length=0;
+	 console.log("test List Turmas");
+	 jsRoutes.controllers.TurmaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha uma turma ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+    
+    
+    function pop() {
+     var dop = document.getElementById("ddl3").value;
+     alert(dop);
+    }
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
+    }
+
+$(document).ready(function(){
+	$(".navbar .nav:nth-child(1) > li:nth-child(2)").addClass("active");
+	
+	$('#formulario').bind('submit', function() {
+		$('#formulario').showLoading();
+	});
+
+	$('#formularioDuvida').bind('submit', function() {
+		$('#formularioDuvida').showLoading();
+	});
+	
+	$("#btnEnviarDuvida").click(function(){
+		$("#modalEnviarDuvida").modal();
+	});
+	
+	$("#btnLimpar").click(function(){
+		var estruturaMetodoProposto = $("#estruturaMetodoProposto").val();
+
+		$("#resposta").val(estruturaMetodoProposto);
+	});
+});
+</script>

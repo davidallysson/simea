@@ -1,0 +1,67 @@
+@(
+title: String = "SIMEA - Sistema de Monitoramento de Evas�o de Alunos",
+extraHead: Html = Html(""),
+extraScripts: Html = Html(""),
+bodyClass : String = "nav-md"
+)(content : Html)
+
+@import play.api.libs.json.Json 
+
+<!DOCTYPE html>
+<html lang="en">
+    @header(title, extraHead)
+    <body class="@bodyClass">
+   			 @if(flash.containsKey("success")) {
+   			 	@*
+		       <div class="alert alert-success">
+  					<strong> @flash.get("success")</strong>
+				</div>
+				*@
+			 	@*arranjo tecnico para carregar o onload na tag body *@
+		        @*
+		        <div class="alert-message warning" >
+		            <strong >Done!</strong> @flash.get("success")
+		        </div>
+		        *@
+		        @*arranjo tecnico para carregar o onload na tag body *@
+		        <body onload="loadNotificationSucess('@flash.get("success")')"></body>
+		    }
+		     @if(flash.containsKey("error")) {
+				 <body onload="loadNotificationError('@flash.get("error")')"></body>
+		     }
+		    
+    <div class="container body">
+        <div class="main_container">
+            @content
+		    
+
+<script  type="text/javascript">
+function loadNotificationSucess(data) {
+	new PNotify({
+	    title: data,
+	    text: '',
+	    type: 'success',
+	    hide: true
+	});
+}
+function loadNotificationError(data) {
+	new PNotify({
+	    title: data,
+	    text: '',
+	    type: 'error',
+	    hide: true
+	});
+}
+</script>
+  @* 
+ 	@if(flash.containsKey("success")) {
+  		@flash.get("success")
+	} else {
+	  Welcome!
+	}
+*@
+        </div>
+    </div>
+    </body>
+    @extraScripts
+</html>

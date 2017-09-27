@@ -1,0 +1,33 @@
+@(aluno: forms.UsuarioStatusForm)
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("", "", extraScripts= Html("")){
+    @utils.panel("Antes de seguirmos no question&aacute;rio, precisamos saber como est&aacute; sua situação acad&ecirc;mica"){
+        <div class="x_content">
+               @helper.form(action = controllers.routes.AlunoController.editarStatusAluno(), 'class -> "form-horizontal form-label-left" , 'id -> "statusAluno" ) {
+       			<div class="form-group" id="idCampus_field">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Status:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control" name="idStatus" id="idStatus" >
+                        @if(getUsuarioLogado().ativo){
+                        	 <option selected="true" value="1">Ativo - Cursando regularmente</option>
+							 <option value="0">Inativo - Matr&iacute;cula trancada ou desist&ecirc;ncia do curso</option>
+                        }else{
+                          	<option selected hidden>Escolha uma opcao</option>
+							<option value="1">Ativo - Cursando regularmente</option>
+							<option value="0">Inativo - Matr&iacute;cula trancada ou desist&ecirc;ncia do curso</option>
+                        }
+                          </select>
+                      </div>
+                 </div>
+           		<div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success">Continuar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

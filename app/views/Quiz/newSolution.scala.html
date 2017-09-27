@@ -1,0 +1,32 @@
+@()
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("SIMEA - Sistema de Monitoramente de Evasao de Alunos", "", extraScripts= Html("")){
+    @utils.panel(""){
+  
+  <h2>Inicio do Question�rio</h2>
+  &nbsp;
+  
+  @if(getUsuarioLogado() != null){
+	<h3> <strong> Prezado(a) @getUsuarioLogado().nome, </strong> </h3>
+   }
+   <br />
+  <h3>Texto introdutorio apra
+  <h3>Iniciar Quiz Aluno  </h3> 
+  
+  &nbsp;
+  <form class="form-horizontal" action="/solutions" method="POST">
+
+	<br />
+	<br />
+
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit"  class="btn-large btn-primary" >START</button>
+		</div>
+	</div>
+  </form>
+  }
+
+}

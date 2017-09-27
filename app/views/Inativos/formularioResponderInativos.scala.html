@@ -1,0 +1,156 @@
+@(inativoForm: Form[forms.InativoForm])
+
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@import helper._
+@import helper.{FieldConstructor}
+
+@base("SIMEA - Sistema de Monitoramento de Evasao de Alunos", "", extraScripts= Html("")){
+    @utils.panel("Responda as questoes abaixo:"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.InativosController.responder(), 'class -> "form-horizontal form-label-left" , 'id -> "responderQuestaoInativos" ) {
+			<h4>	
+				Ol&aacute; @getUsuarioLogado().nome! <br><br>
+				Sentimos sua falta! <br><br>
+				Gostar&iacute;amos de saber, dentre as alternativas abaixo, as &ccedil;&otilde;es que melhor descreve a raz&atilde;o de sua desvincula&ccedil;&atilde;o com o Instituto. 
+				<br><br><br>
+				</<h4>
+				      <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                          <small class="text-navy">Selecione uma op&ccedil;&atilde;o ou mais</small>
+                        </label>
+
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                         <div class="checkbox">
+                         <label>
+                             @checkbox(
+			               			inativoForm("opcao1"), 
+			               			'id -> "opcao01",
+			               			'_label -> None, '_text -> "Nao era o curso que desejava",
+			              			'_showConstraints -> false)
+			              </label>
+                          </div>
+                         <div class="checkbox">
+                            <label>
+                               @checkbox(
+			               			inativoForm("opcao2"), 
+			               			'id -> "opcao02",
+			               			'_label -> None, '_text -> "Durante o curso me interessei por outra area",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao3"), 
+			               			'id -> "opcao03",
+			               			'_label -> None, '_text -> "Faltou-me incentivo familiar",
+			              			'_showConstraints -> false)	
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao4"), 
+			               			'id -> "opcao04",
+			               			'_label -> None, '_text -> "Tive problemas familiares e acabei ficando desestimulado",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao5"), 
+			               			'id -> "opcao05",
+			               			'_label -> None, '_text -> "Precisei optar entre trabalho e estudos",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao6"), 
+			               			'id -> "opcao06",
+			               			'_label -> None, '_text -> "Nao consegui nemhum auxilio economico",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao7"), 
+			               			'id -> "opcao07",
+			               			'_label -> None, '_text -> "Nao consegui acompanhar os conteudos devido a complexidade",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao8"), 
+			               			'id -> "opcao08",
+			               			'_label -> None, '_text -> "A didatica dos professores me prejudicou academicamente",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao9"), 
+			               			'id -> "opcao09",
+			               			'_label -> None, '_text -> "Faltou-me perspectiva profissional",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao10"), 
+			               			'id -> "opcao10",
+			               			'_label -> None, '_text -> " Nao considerei lucrativa a area profissional referente ao curso",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao11"), 
+			               			'id -> "opcao11",
+			               			'_label -> None, '_text -> "Nao me identifiquei com a estrutura do Instituto",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              @checkbox(
+			               			inativoForm("opcao12"), 
+			               			'id -> "opcao02",
+			               			'_label -> None, '_text -> "Consegui ingressar em outra instituicao com melhor estrutura",
+			              			'_showConstraints -> false)
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Outro:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <textarea class="form-control" rows="4" placeholder='Deixe seu coment&aacute;rio' id="opcao13"></textarea>
+                        </div>
+                        </div>
+                      </div>
+                  
+           		<div class="ln_solid"></div>
+           		
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-success" onclick="return confirm('Confirma o envio das informa&ccedil;&otilde;es?');">Enviar</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

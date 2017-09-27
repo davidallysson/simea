@@ -1,0 +1,46 @@
+@(diretorias: List[Diretoria])
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("SIMEA - Sistema de Monitoramento de Evas�o de Alunos", "", extraScripts= Html("")){
+    @utils.panel("Diretorias"){
+        <div class="x_content">
+       		 <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search" >
+                  <div class="input-group" style="float:right;">
+                    <a href="@routes.DiretoriaController.formulario" class="btn btn-default btn-lg"><i class="btn btn-default btn-lg"></i>Cadastrar</a>
+                  </div>
+                </div>
+              </div>
+              <br>
+            @if(diretorias.size == 0) {
+				<h3>Nenhuma diretoria cadastrada.</h3>			
+			} else {
+				@for(diretoria <- diretorias) {
+					<div class="item-lista">
+						<div class="item-lista">
+							<div class="item">
+								<h2>
+									<a href="@routes.DiretoriaController.visualizar(diretoria.id)">
+										@diretoria.nome 
+									</a>
+								</h2>
+								<div style=" padding-top:10px;">
+									<a href="@routes.DiretoriaController.visualizar(diretoria.id)" class="btn btn-primary"><i class="icon-white icon-list-alt"></i> Visualizar</a>
+									
+									@if(isLogado()) { 
+										@if(getUsuarioLogado().isAdministrador) {
+											<a href="@routes.DiretoriaController.editar(diretoria.id)" class="btn"><i class="icon-edit"></i> Editar</a>
+											<a href="@routes.DiretoriaController.deletar(diretoria.id)" onclick="return confirm('Deseja realmente excluir a diretoria &quot;@diretoria.nome&quot;?')" class="btn"><i class="icon-remove"></i> Excluir</a>
+										} 
+									} 
+								</div>
+							 <br /><br />
+							</div> 
+						</div>
+					</div>
+				 }
+           } 
+        </div>
+    }
+}

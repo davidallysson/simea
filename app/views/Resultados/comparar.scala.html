@@ -1,0 +1,1976 @@
+@*
+	Page que permite uma comparacao dos graficos com os dados do alunos
+*@
+
+@(resultado: forms.ResultadosForm, alunos: List[Usuario], turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus], alunos2: List[Usuario], turmas2: List[Turma], cursos2: List[Curso], diretorias2: List[Diretoria], campus2: List[Campus])
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("SIMEA - Sistema de Monitoramento de Evas�o de Alunos", "Comparar Resultados", extraScripts= Html("")){
+   @*
+   
+    @utils.panel("Comparar Por Evasometro"){
+        <div class="x_content">
+       		 <div class="title_right">
+              </div>
+              <br>
+              <div style="width: 600px; height: 200px; margin: 0 auto">
+    			<div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+    			<div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+			</div>
+        </div>
+    }
+    
+    @utils.panel("Consultar Por Eixo"){
+    	<div class="x_content">
+    		<div class="title_right">
+            </div>
+            <br>
+              <div style="width: 600px; height: 400px; margin: 0 auto">
+				<div id="container" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+			</div>
+		</div>
+    }
+    
+    *@
+    
+      @helper.form(action = controllers.routes.ResultadosController.exportCSV() , 'class -> "form-horizontal form-label-left" , 'id -> "compareFormParametro1" ) {
+      	
+    <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Parametro 1</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+                    
+	                    <div class="checkboxes">
+						   <div class="form-group" id="idCampus_field">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+		                        <div class="col-md-9 col-sm-9 col-xs-12">
+		                          <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
+			                            <option value="0" selected hidden>Escolha uma opcao</option>
+			                            @for(campi <- campus) {
+									 		 <option value="@campi.id">@campi.nome</option>
+										}
+		                          </select>
+		                      </div>
+		                 </div>
+		                  <div class="form-group" id="idDiretoria_field">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >
+	                          	<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idCurso_field">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idCurso" id="idCurso"  onchange="configureDropDownListsTurmas(this,document.getElementById('idTurma'))" >
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idTurma_field">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idTurma" id="idTurma" onchange="configureDropDownListsAlunos(this,document.getElementById('idAluno'))" >
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idAluno_field">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Aluno:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idAluno" id="idAluno"  onchange="configureDropDownListsEixos(this,document.getElementById('idEixo'))">
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idEixo_field">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Eixo:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idEixo" id="idEixo" >
+		                            <option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+					</div>
+                     <div class="ln_solid"></div>
+
+                      <button type="submit" class="btn btn-info" >Download CSV</buttton>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            }
+              <!-- /form input mask -->
+ 			@helper.form(action = controllers.routes.ResultadosController.exportCSV2() , 'class -> "form-horizontal form-label-left" , 'id -> "compareFormParametro2" ) {
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Parametro 2</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    
+	                     <div class="checkboxes">
+						   <div class="form-group" id="idCampus_fieldComparacao">
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+		                        <div class="col-md-9 col-sm-9 col-xs-12">
+		                          <select class="form-control" name="idCampusComparacao" id="idCampusComparacao" onchange="configureDropDownListsComparacao(this,document.getElementById('idDiretoriaComparacao'))">
+			                            <option value="0" selected hidden>Escolha uma opcao</option>
+			                            @for(campi <- campus) {
+									 		 <option value="@campi.id">@campi.nome</option>
+										}
+		                          </select>
+		                      </div>
+		                 </div>
+		                  <div class="form-group" id="idDiretoria_fieldComparacao">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idDiretoriaComparacao" id="idDiretoriaComparacao" onchange="configureDropDownListsCursosComparacao(this,document.getElementById('idCursoComparacao'))" >
+	                          	<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idCurso_fieldComparacao">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idCursoComparacao" id="idCursoComparacao"  onchange="configureDropDownListsTurmasComparacao(this,document.getElementById('idTurmaComparacao'))" >
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idTurma_fieldComparacao">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idTurmaComparacao" id="idTurmaComparacao" onchange="configureDropDownListsAlunosComparacao(this,document.getElementById('idAlunoComparacao'))" >
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idAluno_fieldComparacao">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Aluno:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idAlunoComparacao" id="idAlunoComparacao"  onchange="configureDropDownListsEixosComparacao(this,document.getElementById('idEixoComparacao'))">
+	                          		<option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+	                 	<div class="form-group" id="idEixo_fieldComparacao">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Eixo:</label>
+	                        <div class="col-md-9 col-sm-9 col-xs-12">
+	                          <select class="form-control" name="idEixoComparacao" id="idEixoComparacao" >
+		                            <option value="0" selected hidden>Escolha uma opcao</option>
+	                          </select>
+	                      </div>
+	                 	</div>
+					</div>
+					
+					  <div class="ln_solid"></div>
+					  <button type="submit" class="btn btn-info" >Download CSV</buttton>
+
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+      }
+      
+      <div class="row">
+       <div class="col-md-6">
+       <div class="x_panel">
+            <div class="x_title">
+              <h2>Comparar </h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                 	<button type="submit" class="btn btn-primary" onclick="ClearFields();">Limpar</button>
+                 	<button class="btn btn-success" onclick="resultadoForm('compareFormParametro1')">Comparar</button>
+                 @*	<a class="btn btn-danger" href="@routes.ResultadosController.exportCSV()">Delete</a> *@
+                </div>
+            </div>
+          </div>
+      	</div>
+      	<div class="col-md-6">
+       <div class="x_panel">
+            <div class="x_title">
+              <h2>Comparar </h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <div class="form-group">
+             	<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+             		<button type="submit" class="btn btn-primary" onclick="ClearFieldsCompara();">Limpar</button>
+                 	<button class="btn btn-success" onclick="resultadoForm2('compareFormParametro2')">Comparar</button>
+                </div>
+             </div>
+            </div>
+          </div>
+      	</div>
+      </div>
+			
+          <!-- CONSULTAR POR EVASOMETRO -->
+         
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Evasometro</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+                    
+			            <div style="width: 600px; height: 200px; margin: 0 auto">
+			    			<div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+			    			<div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Evasometro</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+ 						<div style="width: 600px; height: 200px; margin: 0 auto">
+			    			<div id="container-speed-compara" style="width: 300px; height: 200px; float: left"></div>
+			    			<div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+          <!-- FIM CONSULTAR POR EVASOMETRO -->
+         
+         
+          <!-- INICIO POR EIXO -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Eixo</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+                      	<div style="width: 300px; height: 400px; margin: 0 auto">
+							<div id="container" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Eixo</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+                    	<div style="width: 300px; height: 400px; margin: 0 auto">
+							<div id="container2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR EIXO -->
+    
+    
+    
+    
+    <!-- INICIO POR SEXO -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Sexo</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                  	<form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="genero" style="min-width: 200px; max-width: 300px; height: 300px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Sexo</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="genero2" style="min-width: 200px; max-width: 300px; height: 300px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR SEXO -->
+    
+    
+    
+     <!-- INICIO POR Faixa Etaria -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Faixa Etaria</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                  	<form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="faixaEtaria" style="min-width: 400px; max-width: 300px; height: 300px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Faixa Etaria</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="faixaEtaria2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR Faixa Etaria -->
+    
+    
+         <!-- INICIO POR Estado Civil -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Estado Civil</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                  	<form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="estadoCivil" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Estado Civil</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="estadoCivil2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR Estado Civil -->
+       
+       <!-- INICIO POR RACA -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Raça/Cor</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                  	<form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="raca" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Raça/Cor</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+						<div style="width: 300px; height: 300px; margin: 0 auto">
+							<div id="raca2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR RACA -->
+    
+    
+     <!-- INICIO POR RENDA -->
+          <div class="row">
+              <!-- form input mask -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Renda</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                  	<form class="form-horizontal form-label-left">
+						<div style="width: 600px; height: 400px; margin: 0 auto">
+							<div id="renda" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /form input mask -->
+
+              <!-- form color picker -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Por Renda</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+						<div style="width: 600px; height: 400px; margin: 0 auto">
+							<div id="renda2" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+						</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+         </div>
+    <!-- FIM CONSULTAR POR Estado Civil -->
+}
+<script type="text/javascript" src="@routes.CursoController.javascriptRoutes"></script>
+
+<script type="text/javascript">
+	var gaugeOptions = {
+
+		    chart: {
+		        type: 'solidgauge'
+		    },
+
+		    title: null,
+
+		    pane: {
+		        center: ['50%', '85%'],
+		        size: '140%',
+		        startAngle: -90,
+		        endAngle: 90,
+		        background: {
+		            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+		            innerRadius: '60%',
+		            outerRadius: '100%',
+		            shape: 'arc'
+		        }
+		    },
+
+		    tooltip: {
+		        enabled: false
+		    },
+
+		    // the value axis
+		    yAxis: {
+		        stops: [
+		            [0.1, '#55BF3B'], // green
+		            [0.5, '#DDDF0D'], // yellow
+		            [0.9, '#DF5353'] // red
+		        ],
+		        lineWidth: 0,
+		        minorTickInterval: null,
+		        tickAmount: 2,
+		        title: {
+		            y: -70
+		        },
+		        labels: {
+		            y: 16
+		        }
+		    },
+
+		    plotOptions: {
+		        solidgauge: {
+		            dataLabels: {
+		                y: 5,
+		                borderWidth: 0,
+		                useHTML: true
+		            }
+		        }
+		    }
+		};
+
+		// The speed gauge
+		var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+		    yAxis: {
+		        min: 0,
+		        max: 100,
+		        title: {
+		            text: 'Evasometro'
+		        }
+		    },
+
+		    credits: {
+		        enabled: false
+		    },
+
+		    series: [{
+		        name: 'Speed',
+		        data: [@resultado.valor],
+		        dataLabels: {
+		            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+		                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                   '<span style="font-size:12px;color:silver"> </span></div>'
+		        },
+		        tooltip: {
+		            valueSuffix: ' '
+		        }
+		    }]
+
+		}));
+		
+		// The speed gauge
+		var chartSpeed2 = Highcharts.chart('container-speed-compara', Highcharts.merge(gaugeOptions, {
+		    yAxis: {
+		        min: 0,
+		        max: 100,
+		        title: {
+		            text: 'Evasometro'
+		        }
+		    },
+
+		    credits: {
+		        enabled: false
+		    },
+
+		    series: [{
+		        name: 'Speed',
+		        data: [@resultado.valorCompara],
+		        dataLabels: {
+		            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+		                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                   '<span style="font-size:12px;color:silver"> </span></div>'
+		        },
+		        tooltip: {
+		            valueSuffix: ' '
+		        }
+		    }]
+
+		}));
+
+			
+			// Bring life to the dials
+		    var eixos = [];
+			
+			jsRoutes.controllers.EixoController.get().ajax({
+		      success: function(data) {
+		        console.log(data);
+				for (i = 0; i < data.length; i++) {
+		            eixos.push(data[i].nome);
+		         }
+				 console.log(eixos);
+		      },
+		      error: function() {
+		        alert("Error!")
+		      }
+	    });
+
+			Highcharts.chart('container', {
+			    chart: {
+			        polar: true,
+			        type: 'line'
+			    },
+			
+			    title: {
+			        text: 'Parametros',
+			        x: -80
+			    },
+			
+			    pane: {
+			        size: '80%'
+			    },
+			
+			    xAxis: {
+			        categories: eixos,
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+			    },
+			
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+			
+			    tooltip: {
+			        shared: true,
+			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+			    },
+			
+			    legend: {
+			        align: 'right',
+			        verticalAlign: 'top',
+			        y: 70,
+			        layout: 'vertical'
+			    },
+			
+			    series: [{
+			        name: 'Evasao',
+			        data: [1, 3, 5, 3, 2, 1],
+			        pointPlacement: 'on'
+			    }]
+			
+			});
+
+var plus = function() {
+    var num1 = $('#num1').val();
+    var num2 = $('#num2').val();
+
+    jsRoutes.controllers.DiretoriaController.index(ddl1.value).ajax({
+      success: function(data) {
+        $("#result").html(data);
+      },
+      error: function() {
+        alert("Error!")
+      }
+    })
+  };
+
+
+  function sendPutRequest(formId, rUrl){
+		var form=$('#'+formId);
+		$.ajax({
+			url: form.attr('action'),
+			method: "GET",
+			data: form.serialize(),
+			success: function(){
+				alert("Ok!")
+				window.location = rUrl;
+			},
+			error: function(){
+				 alert("Erro!")
+				//window.location.reload();
+			}
+		});
+	}
+	
+	 function sendPutRequestCSV(formId, rUrl){
+		var form=$('#'+formId);
+		$.ajax({
+			url: form.attr('action'),
+			method: "GET",
+			data: form.serialize(),
+			success: function(){
+				alert("Ok!")
+				window.location = rUrl;
+			},
+			error: function(){
+				 alert("Erro!")
+				//window.location.reload();
+			}
+		});
+	}
+	
+	  function resultCSVForm(formId, rUrl ) {
+	 	 console.log("test resultCSVForm");
+		 var form=$('#'+formId);
+		 jsRoutes.controllers.ResultadosController.exportCSV().ajax({
+			  data: form.serialize(),
+			  dataType: 'text',
+		      success: function(data) {
+		        console.log(data);
+		         console.log(rUrl);
+		        	window.location = rUrl;
+				},
+		      error: function() {
+		        alert("Error!")
+		      }
+		});
+}
+
+  function resultadoForm(formId) {
+		 console.log("test result Form");
+		 var form=$('#'+formId);
+		 jsRoutes.controllers.ResultadosController.consultarEvasometro1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		        console.log(data);
+		        var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+		    yAxis: {
+		        min: 0,
+		        max: 100,
+		        title: {
+		            text: 'Evasometro'
+		        }
+		    },
+
+		    credits: {
+		        enabled: false
+		    },
+
+		    series: [{
+		        name: 'Speed',
+		        data: [data],
+		        dataLabels: {
+		            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+		                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                   '<span style="font-size:12px;color:silver"> </span></div>'
+		        },
+		        tooltip: {
+		            valueSuffix: ' '
+		        }
+		    }]
+
+		}));
+		      },
+		      error: function() {
+		        alert("Error!")
+		      }
+		    });
+		    
+		    
+		    jsRoutes.controllers.ResultadosController.consultarEixo1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      	Highcharts.chart('container', {
+			    chart: {
+			        polar: true,
+			        type: 'line'
+			    },
+			
+			    title: {
+			        text: 'Parametros/Eixos',
+			        x: -80
+			    },
+			
+			    pane: {
+			        size: '80%'
+			    },
+			
+			    xAxis: {
+			        categories: ['Individual', 'Familiar', 'IntraEscolar', 'Carreira Profissional', 'Area Formacao', 'Institucional'],
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+			    },
+			
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+			
+			    tooltip: {
+			        shared: true,
+			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+			    },
+			
+			    legend: {
+			        align: 'right',
+			        verticalAlign: 'top',
+			        y: 70,
+			        layout: 'vertical'
+			    },
+			
+			    series: [{
+			        name: 'Evasao',
+			        data: data,
+			        pointPlacement: 'on'
+			    }]
+			
+			});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});
+			
+			
+			jsRoutes.controllers.ResultadosController.consultarSexo1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('genero', {
+					    chart: {
+					        plotBackgroundColor: null,
+					        plotBorderWidth: 0,
+					        plotShadow: false
+					    },
+					    title: {
+					        text: 'Sexo',
+					        align: 'center',
+					        verticalAlign: 'middle',
+					        y: 40
+					    },
+					    tooltip: {
+					        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+					    },
+					    plotOptions: {
+					        pie: {
+					            dataLabels: {
+					                enabled: true,
+					                distance: -50,
+					                style: {
+					                    fontWeight: 'bold',
+					                    color: 'white'
+					                }
+					            },
+					            startAngle: -90,
+					            endAngle: 90,
+					            center: ['50%', '75%']
+					        }
+					    },
+					    series: [{
+					        type: 'pie',
+					        name: 'Sexo',
+					        innerSize: '50%',
+					        data: [
+					            ['Masculino',   data.masculino],
+					            ['Feminino',    data.feminino]
+					        ]
+					    }]
+					});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  
+			
+			
+			
+			jsRoutes.controllers.ResultadosController.consultarFaixaEtaria1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('faixaEtaria', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Faixa Etaria dos Alunos'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: '15 a 19 anos',
+            y: data.valorFaixaEtaria15a19
+        }, {
+            name: '20 a 24 anos',
+            y: data.valorFaixaEtaria20a24,
+            sliced: true,
+            selected: true
+        }, {
+            name: '25 a 29 anos',
+            y: data.valorFaixaEtaria25a29
+        }, {
+            name: '30 a 34 anos',
+            y: data.valorFaixaEtaria30a34
+        }, {
+            name: '35 a 39 anos',
+            y: data.valorFaixaEtaria35a39
+        }, {
+            name: '40 anos ou mais',
+            y: data.valorFaixaEtaria40ouMais
+        }]
+    }]
+});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  
+			
+			
+	
+			
+			jsRoutes.controllers.ResultadosController.consultarEstadoCivil1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('estadoCivil', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Estado Civil',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%']
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Estado Civil',
+        innerSize: '50%',
+        data: [
+            ['Solteiro',   data.solteiro],
+            ['Casado',       data.casado],
+            ['Divorciado', data.divorciado],
+            ['Separado',   data.separado],
+            ['Viúvo',     data.viuvo]
+        ]
+    }]
+});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  		
+			
+		
+			
+			jsRoutes.controllers.ResultadosController.consultarRaca1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			
+Highcharts.chart('raca', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Raça/Etnia dos Alunos'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Branca',
+            y: data.branca
+        }, {
+            name: 'Preta',
+            y: data.preta,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Parda',
+            y: data.parda
+        }, {
+            name: 'Amarela',
+            y: data.amarela
+        }, {
+            name: 'Indigina',
+            y: data.indigina
+        }, {
+            name: 'Sem Declaracao',
+            y: data.semDeclaracao
+        }]
+    }]
+});
+		      					
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			}); 
+		
+		
+
+		
+			jsRoutes.controllers.ResultadosController.consultarRenda1().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			
+Highcharts.chart('renda', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Renda Familiar',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%']
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Renda',
+        innerSize: '50%',
+        data: [
+            ['Até 1 Salário mínimo',   data.ate1salario],
+            ['1 a 3 salários mínimos',       data.ate3salarios],
+            ['4 a 6 salários mínimos', data.ate6salarios],
+            ['7 a 9 salários mínimos',    data.ate9salarios],
+            ['10 ou mais salários mínimos',     data.ate10ouMais]
+        ]
+    }]
+});
+		      					
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			}); 
+			
+			
+			
+}
+	  
+	  
+	  
+ function resultadoForm2(formId) {
+		 console.log("test result Form");
+		 var form=$('#'+formId);
+		 jsRoutes.controllers.ResultadosController.consultarEvasometro2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		        console.log(data);
+		        var chartSpeed = Highcharts.chart('container-speed-compara', Highcharts.merge(gaugeOptions, {
+		    yAxis: {
+		        min: 0,
+		        max: 100,
+		        title: {
+		            text: 'Evasometro'
+		        }
+		    },
+
+		    credits: {
+		        enabled: false
+		    },
+
+		    series: [{
+		        name: 'Speed',
+		        data: [data],
+		        dataLabels: {
+		            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+		                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                   '<span style="font-size:12px;color:silver"> </span></div>'
+		        },
+		        tooltip: {
+		            valueSuffix: ' '
+		        }
+		    }]
+
+		}));
+		      },
+		      error: function() {
+		        alert("Error!")
+		      }
+		    });
+		    
+		    
+		   jsRoutes.controllers.ResultadosController.consultarEixo2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      	Highcharts.chart('container2', {
+			    chart: {
+			        polar: true,
+			        type: 'line'
+			    },
+			
+			    title: {
+			        text: 'Parametros/Eixos',
+			        x: -80
+			    },
+			
+			    pane: {
+			        size: '80%'
+			    },
+			
+			    xAxis: {
+			        categories: ['Individual', 'Familiar', 'IntraEscolar', 'Carreira Profissional', 'Area Formacao', 'Institucional'],
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+			    },
+			
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+			
+			    tooltip: {
+			        shared: true,
+			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+			    },
+			
+			    legend: {
+			        align: 'right',
+			        verticalAlign: 'top',
+			        y: 70,
+			        layout: 'vertical'
+			    },
+			
+			    series: [{
+			        name: 'Evasao',
+			        data: data,
+			        pointPlacement: 'on'
+			    }]
+			
+			});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});
+			
+			 jsRoutes.controllers.ResultadosController.consultarSexo2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('genero2', {
+					    chart: {
+					        plotBackgroundColor: null,
+					        plotBorderWidth: 0,
+					        plotShadow: false
+					    },
+					    title: {
+					        text: 'Sexo',
+					        align: 'center',
+					        verticalAlign: 'middle',
+					        y: 40
+					    },
+					    tooltip: {
+					        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+					    },
+					    plotOptions: {
+					        pie: {
+					            dataLabels: {
+					                enabled: true,
+					                distance: -50,
+					                style: {
+					                    fontWeight: 'bold',
+					                    color: 'white'
+					                }
+					            },
+					            startAngle: -90,
+					            endAngle: 90,
+					            center: ['50%', '75%']
+					        }
+					    },
+					    series: [{
+					        type: 'pie',
+					        name: 'Sexo',
+					        innerSize: '50%',
+					        data: [
+					            ['Masculino',   data.masculino],
+					            ['Feminino',    data.feminino]
+					        ]
+					    }]
+					});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  
+		    
+			
+			jsRoutes.controllers.ResultadosController.consultarFaixaEtaria2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('faixaEtaria2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Faixa Etaria dos Alunos'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: '15 a 19 anos',
+            y: data.valorFaixaEtaria15a19
+        }, {
+            name: '20 a 24 anos',
+            y: data.valorFaixaEtaria20a24,
+            sliced: true,
+            selected: true
+        }, {
+            name: '25 a 29 anos',
+            y: data.valorFaixaEtaria25a29
+        }, {
+            name: '30 a 34 anos',
+            y: data.valorFaixaEtaria30a34
+        }, {
+            name: '35 a 39 anos',
+            y: data.valorFaixaEtaria35a39
+        }, {
+            name: '40 anos ou mais',
+            y: data.valorFaixaEtaria40ouMais
+        }]
+    }]
+});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  
+		    
+		  jsRoutes.controllers.ResultadosController.consultarEstadoCivil2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			Highcharts.chart('estadoCivil2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Estado Civil',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%']
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Estado Civil',
+        innerSize: '50%',
+        data: [
+            ['Solteiro',   data.solteiro],
+            ['Casado',       data.casado],
+            ['Divorciado', data.divorciado],
+            ['Separado',   data.separado],
+            ['Viúvo',     data.viuvo]
+        ]
+    }]
+});
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			});  	  
+		    
+		    
+		   jsRoutes.controllers.ResultadosController.consultarRaca2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			
+Highcharts.chart('raca2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Raça/Etnia dos Alunos'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Branca',
+            y: data.branca
+        }, {
+            name: 'Preta',
+            y: data.preta,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Parda',
+            y: data.parda
+        }, {
+            name: 'Amarela',
+            y: data.amarela
+        }, {
+            name: 'Indigina',
+            y: data.indigina
+        }, {
+            name: 'Sem Declaracao',
+            y: data.semDeclaracao
+        }]
+    }]
+});
+		      					
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			}); 
+	
+	
+			
+			jsRoutes.controllers.ResultadosController.consultarRenda2().ajax({
+			  data: form.serialize(),
+			  dataType: 'json',
+		      success: function(data) {
+		      	console.log(data);
+		      			
+Highcharts.chart('renda2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Renda Familiar',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%']
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Renda',
+        innerSize: '50%',
+        data: [
+            ['Até 1 Salário mínimo',   data.ate1salario],
+            ['1 a 3 salários mínimos',       data.ate3salarios],
+            ['4 a 6 salários mínimos', data.ate6salarios],
+            ['7 a 9 salários mínimos',    data.ate9salarios],
+            ['10 ou mais salários mínimos',     data.ate10ouMais]
+        ]
+    }]
+});
+		      					
+			  },
+			  error: function() {
+			       alert("Error!")
+			  }
+			}); 
+	
+}
+
+  //-----------------------------   COMPARACAO 1 --------------------------------------
+  
+ function configureDropDownLists(ddl1,ddl2) {
+	 this.idDiretoria.options.length=0;
+	  var colours = new Array('Black', 'White', 'Blue');
+	 jsRoutes.controllers.DiretoriaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, " ---- Escolha uma diretoria ----", "0");
+            for (i = 0; i < data.length; i++) {
+                createOption(ddl2, data[i].nome, data[i].id);
+            }
+            
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+	 
+        var shapes = new Array('Square', 'Circle', 'Triangle');
+        var names = new Array('John', 'David', 'Sarah');
+      
+    }
+
+ function configureDropDownListsCursos(ddl1,ddl2) {
+	 this.idCurso.options.length=0;
+	 console.log("test Cursos");
+	 jsRoutes.controllers.CursoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um curso ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsTurmas(ddl1,ddl2) {
+	 this.idTurma.options.length=0;
+	 console.log("test List Turmas");
+	 jsRoutes.controllers.TurmaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha uma turma ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsAlunos(ddl1,ddl2) {
+	 this.idAluno.options.length=0;
+	 console.log("test List Alunos");
+	 jsRoutes.controllers.AlunoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um aluno ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsEixos(ddl1,ddl2) {
+	 this.idEixo.options.length=0;
+	 console.log("test List Eixos");
+	 jsRoutes.controllers.EixoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- TODOS ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+
+ //-----------------------------   COMPARACAO 2 --------------------------------------
+ 
+ function configureDropDownListsComparacao(ddl1,ddl2) {
+	 this.idDiretoriaComparacao.options.length=0;
+	  var colours = new Array('Black', 'White', 'Blue');
+	 jsRoutes.controllers.DiretoriaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, " ---- Escolha uma diretoria ----", "0");
+            for (i = 0; i < data.length; i++) {
+                createOption(ddl2, data[i].nome, data[i].id);
+            }
+            
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+	 
+        var shapes = new Array('Square', 'Circle', 'Triangle');
+        var names = new Array('John', 'David', 'Sarah');
+      
+    }
+
+ function configureDropDownListsCursosComparacao(ddl1,ddl2) {
+	 this.idCursoComparacao.options.length=0;
+	 console.log("test Cursos");
+	 jsRoutes.controllers.CursoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um curso ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsTurmasComparacao(ddl1,ddl2) {
+	 this.idTurmaComparacao.options.length=0;
+	 console.log("test List Turmas");
+	 jsRoutes.controllers.TurmaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha uma turma ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsAlunosComparacao(ddl1,ddl2) {
+	 this.idAlunoComparacao.options.length=0;
+	 console.log("test List Alunos");
+	 jsRoutes.controllers.AlunoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um aluno ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsEixosComparacao(ddl1,ddl2) {
+	 this.idEixoComparacao.options.length=0;
+	 console.log("test List Eixos");
+	 jsRoutes.controllers.EixoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- TODOS ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+           
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+    
+    
+    function pop() {
+     var dop = document.getElementById("ddl3").value;
+     alert(dop);
+    }
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
+    }
+    
+    
+    function ClearFields() {
+   		 this.idEixo.options.length=0;
+   		 this.idAluno.options.length=0;
+   		 this.idTurma.options.length=0;
+   		 this.idCurso.options.length=0;
+   		 this.idDiretoria.options.length=0;
+	}
+	
+	function ClearFieldsCompara() {
+   		 this.idEixoComparacao.options.length=0;
+   		 this.idAlunoComparacao.options.length=0;
+   		 this.idTurmaComparacao.options.length=0;
+   		 this.idCursoComparacao.options.length=0;
+   		 this.idDiretoriaComparacao.options.length=0;
+	}
+
+$(document).ready(function(){
+	$(".navbar .nav:nth-child(1) > li:nth-child(2)").addClass("active");
+	
+	$('#formulario').bind('submit', function() {
+		$('#formulario').showLoading();
+	});
+
+	$('#formularioDuvida').bind('submit', function() {
+		$('#formularioDuvida').showLoading();
+	});
+	
+	$("#btnEnviarDuvida").click(function(){
+		$("#modalEnviarDuvida").modal();
+	});
+	
+	$("#btnLimpar").click(function(){
+		var estruturaMetodoProposto = $("#estruturaMetodoProposto").val();
+
+		$("#resposta").val(estruturaMetodoProposto);
+	});
+});
+</script>
+
+

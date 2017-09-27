@@ -1,0 +1,60 @@
+@(loginForm: Form[forms.LoginForm])
+
+@skeleton(
+bodyClass = "login"
+){
+<body class="login">
+<div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+    
+    @if(flash.containsKey("error")) {
+		<div class="alert alert-danger">
+  			<strong>@flash.get("error")</strong>
+		</div>
+	}
+	@if(flash.containsKey("sucess")) {
+		<div class="alert alert-success">
+  			<strong> @flash.get("success")</strong>
+		</div>
+	}
+
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+        	<center><img src="@routes.Assets.versioned("images/simea_v.png")" alt="SIMEA" width="200"></center>
+            <section class="login_content">
+                <form action="@routes.SessionsController.efetuarLogin()" method="POST">
+                    <h1>Acessar o SIMEA	</h1>
+                    <div>
+                        <input type="text" class="form-control" name="email" placeholder="E-mail" required=""/>
+                    </div>
+                    <div>
+                        <input type="password" class="form-control" name="senha" placeholder="Senha" required="" />
+                    </div>
+                    <div>
+                        <input  class="btn btn-default submit" type="submit" name="submit" value="Log in">
+                      	<a class="btn btn-primary" href="#">Recuperar senha?</a>
+                    </div>
+
+                    <div class="clearfix"></div>
+						
+                    <div class="separator">
+                        <div class="clearfix"></div>
+                        @*
+                        @if(error!=null){
+                        	<p class="text-danger">@error</p>
+                        }
+                        *@
+                        <div class="clearfix"></div>
+                        <div>
+                            <h1></h1>
+                        </div>
+                    </div>
+                     <a class="btn btn-success" href="@routes.AlunoController.formulario">Cadastre-se</a>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+}

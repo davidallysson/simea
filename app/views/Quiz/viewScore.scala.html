@@ -1,0 +1,50 @@
+@(s: structures.Score)
+
+@*
+
+View responsavel por mostrar o resultado final para o Aluno.
+
+*@
+
+@import helpers.Seguranca.InformacoesUsuarioHelper._
+
+@base("Profile", "", extraScripts= Html("")){
+    @utils.panel("Administradores"){
+
+
+<body>
+	<div style="text-align: center;">
+		<div style="width: 500px; margin: 0 auto;">
+			<p class="lead">O Questionario de: <strong>"@(s.quiz)"</strong> foi finalizado </p>
+		</div>
+	</div>
+  
+  <div class="page-header" style="overflow: hidden;"></div>
+  
+  
+  <div style="text-align: center;">
+  
+		  <div style="width: 1100px; margin: 0 auto;">
+				<p class="lead">Voce respondeu todas as </p>
+					<h1> @(s.allQuestions)  Perguntas </h1>
+					&nbsp;
+					<p class="lead">Em um tempo de:</p>
+					&nbsp;
+					<h1>@(s.quizAnswerTime.toString())</h1>
+					&nbsp;
+					<p class="lead">
+						@if(getUsuarioLogado()!=null){
+						 <strong> @getUsuarioLogado().nome, obrigado pela suas respostas!</strong> 
+				   		}
+					</p>
+		 </div>
+		 
+		 	<div style="text-align: center;">
+				<div style="width: 500px; margin: 0 auto;">
+					<br /> <br /> 
+					<a href="@routes.HomeController.homeIndex" class="btn-large btn-primary">Continuar!</a> &nbsp;
+				</div>
+			</div>
+  </div>
+  }
+}
