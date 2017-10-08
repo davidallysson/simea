@@ -8,113 +8,110 @@
          @*
          <a href="@routes.HomeController.homeIndex" class="site_title"><i class="fa fa-paw"></i> <span>IFRN</span></a>
          *@
-           @if(isLogado()){
-	         <a href="@routes.HomeController.homeIndex" class="site_title">
-    	     	<img src="@routes.Assets.versioned("images/simea.jpg")"  alt="..." width="120" height="50" />
-        	 </a>
-           }else{
-           	<a href="@routes.HomeController.index" class="site_title">
-    	     	<img src="@routes.Assets.versioned("images/simea.jpg")"  alt="..." width="120" height="50" />
-        	</a>
+           @if(isLogado()) {
+  	         <a href="@routes.HomeController.homeIndex" class="site_title">
+      	     	<img src="@routes.Assets.versioned("images/simea.jpg")"  alt="..." width="120" height="50" />
+          	 </a>
+           } else{
+             <a href="@routes.HomeController.index" class="site_title">
+      	       <img src="@routes.Assets.versioned("images/simea.jpg")"  alt="..." width="120" height="50" />
+          	 </a>
            }
-          @*  <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Play2</span></a> *@
+          @*
+          <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Play2</span></a>
+          *@
         </div>
 
         <div class="clearfix"></div>
 
         <!-- menu profile quick info -->
-         @if(isLogado()){
+        @if(isLogado()) {
 	        <div class="profile">
-	            <div class="profile_pic">
-	                <img src="@routes.Assets.versioned("images/user.jpg")" alt="..." class="img-circle profile_img">
-	            </div>
-	            <div class="profile_info">
-		            @*
-		            @if(isLogado()){
-		                <h2 style="color:#CC3D1D;font-weight:bold">@getUsuarioLogado().nome</h2>
-		           	}
-		           	*@
-	            </div>
+	          <div class="profile_pic">
+	            <img src="@routes.Assets.versioned("images/user.jpg")" alt="..." class="img-circle profile_img">
+	          </div>
+            <div class="profile_info">
+	            @*
+  	            @if(isLogado()) {
+  	                <h2 style="color: #CC3D1D; font-weight:bold">@getUsuarioLogado().nome</h2>
+  	           	}
+	           	*@
+            </div>
 	        </div>
         }
         <!-- /menu profile quick info -->
 
-        <br />
+        <br/>
 
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-          @*     
-          
-          		 @if(com.github.gentelella.play.controllers.BaseLoggedController.isUser){
+          <div class="menu_section">
+            @*
+          		@if(com.github.gentelella.play.controllers.BaseLoggedController.isUser) {
                 <div class="menu_section">
                     <h3>User</h3>
                     <ul class="nav side-menu">
-                        <li>
-                            <a href=""><i class="fa fa fa-home"></i> Home </a>
-                             <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index()"><i class="fa fa fa-home"></i> Home </a>
-                        </li>
+                      <li>
+                        <a href=""><i class="fa fa fa-home"></i> Home </a>
+                        <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index()"><i class="fa fa fa-home"></i> Home </a>
+                      </li>
                     </ul>
                     @publicViews
                 </div>
-                
-                }else{
-           *@
-                <div class="menu_section">
-                   
-                    @if(isLogado()){
-                		<h2 style="color:#ffffff;font-weight:bold">@getUsuarioLogado().nome</h2>
+              } else {
+            *@
+              <div class="menu_section">
+                @if(isLogado()) {
+                	<h2 style="color:#ffffff;font-weight:bold">@getUsuarioLogado().nome</h2>
            			}
-           			 <br />
-           			   @if(isLogado()) {
-                    <ul class="nav side-menu">
-                        <li>
-                           @* <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index()"><i class="fa fa fa-home"></i> Home </a> *@
-                            <a href="@routes.HomeController.homeIndex"><i class="fa fa fa-home"></i> Home </a>
-                        </li>
-                      
-							@if(getUsuarioLogado().isAdministrador || getUsuarioLogado().isSupervisor) {
-									<li><a><i class="fa fa-bar-chart-o"></i> Resultados <span class="fa fa-chevron-down"></span></a>
-		                            <ul class="nav child_menu">
-		                            	<li><a href="@routes.ResultadosController.consultar">Consultar Resultados</a></li>
-		                                <li><a href="@routes.ResultadosController.comparar">Comparar Resultados</a></li>
-		                            </ul>
-		                        </li>
-							}else{
-								<li><a><i class="fa fa-edit"></i> Quiz <span class="fa fa-chevron-down"></span></a>
-		                            <ul class="nav child_menu">
-		                            	<li><a href="@routes.AlunoController.statusAlunoForm()">Responder Questionario</a></li>
-		                            </ul>
-		                        </li>
-							}	
-	                        @if(getUsuarioLogado().isAdministrador) {
-	                        <li><a><i class="fa fa-edit"></i> Cadastro <span class="fa fa-chevron-down"></span></a>
-	                            <ul class="nav child_menu">
-	                                <li><a href="@routes.CampusController.index">Campus</a></li>
-	                                <li><a href="@routes.DiretoriaController.index">Diretorias</a></li>
-	                                <li><a href="@routes.CursoController.index">Cursos</a></li>
-	                                <li><a href="@routes.TurmaController.index">Turmas</a></li>
-	                                <li><a href="@routes.EixoController.index">Eixos</a></li>
-	                                <li><a href="@routes.AlunoController.index">Alunos</a></li>
-	                                <li><a href="@routes.AdministradorController.index">Administradores</a></li>
-	                                <li><a href="@routes.SupervisorController.index">Supervisores</a></li>
-	                            	<li><a href="@routes.QuestaoController.index">Quest&otilde;es</a></li>
-	                            	<li><a href="@routes.QuizController.index">Questionarios</a></li>
-	                            </ul>
-	                        </li>
-	                       	}
-                    </ul>
-                    <br />
-                    <br />
-                    <br />
-		    	     	<img src="@routes.Assets.versioned("images/ifrn-relevo4.png")"  alt="..." width="220" height="auto" />
-                    }
-                    @publicViews
-                </div>
-       @*         } *@
+           			<br/>
+           			@if(isLogado()) {
+                  <ul class="nav side-menu">
+                    <li>
+                      @* <a href="@com.github.gentelella.play.controllers.routes.LoggedController.index()"><i class="fa fa fa-home"></i> Home </a> *@
+                      <a href="@routes.HomeController.homeIndex"><i class="fa fa fa-home"></i> Home </a>
+                    </li>
+							      @if(getUsuarioLogado().isAdministrador || getUsuarioLogado().isSupervisor) {
+  									  <li><a><i class="fa fa-bar-chart-o"></i> Resultados <span class="fa fa-chevron-down"></span></a>
+  		                  <ul class="nav child_menu">
+  		                    <li><a href="@routes.ResultadosController.consultar">Consultar Resultados</a></li>
+  		                    <li><a href="@routes.ResultadosController.comparar">Comparar Resultados</a></li>
+  		                  </ul>
+  		                </li>
+							      } else {
+								      <li><a><i class="fa fa-edit"></i> Quiz <span class="fa fa-chevron-down"></span></a>
+		                    <ul class="nav child_menu">
+		                      <li><a href="@routes.AlunoController.statusAlunoForm()">Responder Questionario</a></li>
+		                    </ul>
+		                  </li>
+							      }
+	                  @if(getUsuarioLogado().isAdministrador) {
+	                    <li><a><i class="fa fa-edit"></i> Cadastro <span class="fa fa-chevron-down"></span></a>
+	                      <ul class="nav child_menu">
+                          <li><a href="@routes.CampusController.index">Campus</a></li>
+                          <li><a href="@routes.DiretoriaController.index">Diretorias</a></li>
+                          <li><a href="@routes.CursoController.index">Cursos</a></li>
+                          <li><a href="@routes.TurmaController.index">Turmas</a></li>
+                          <li><a href="@routes.EixoController.index">Eixos</a></li>
+                          <li><a href="@routes.AlunoController.index">Alunos</a></li>
+                          <li><a href="@routes.AdministradorController.index">Administradores</a></li>
+                          <li><a href="@routes.SupervisorController.index">Supervisores</a></li>
+                      	  <li><a href="@routes.QuestaoController.index">Quest&otilde;es</a></li>
+                      	  <li><a href="@routes.QuizController.index">Questionarios</a></li>
+                        </ul>
+                      </li>
+	                  }
+                  </ul>
+                  <br/>
+                  <br/>
+                  <br/>
+		    	     	  <img src="@routes.Assets.versioned("images/ifrn-relevo4.png")"  alt="..." width="220" height="auto" />
+                }
+                @publicViews
+              </div>
+        @*  } *@
             </div>
-            <!--
-            <div class="menu_section">
+            <!-- <div class="menu_section">
                 <h3>Live On</h3>
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
@@ -127,8 +124,7 @@
                         </ul>
                     </li>
                 </ul>
-            </div>
-            -->
+            </div> -->
         </div>
         <!-- /sidebar menu -->
 
@@ -153,7 +149,7 @@
 
 
 @publicViews() = {
-	
+
 @*
 <ul class="nav side-menu">
 <li><a><i class="fa fa-home"></i> Public Views <span class="fa fa-chevron-down"></span></a>
@@ -178,4 +174,3 @@
 *@
 
 }
-

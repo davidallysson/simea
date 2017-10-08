@@ -3,7 +3,7 @@
 @import helpers.Seguranca.InformacoesUsuarioHelper._
 
 @base("Profile", "", extraScripts= Html("")){
-    @utils.panel("Question·rios"){
+    @utils.panel("Question√°rios"){
         <div class="x_content">
        		 <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search" >
@@ -14,7 +14,7 @@
               </div>
               <br>
             @if(quiz.size == 0) {
-				<h3>Nenhum question·rio cadastrado.</h3>			
+				<h3>Nenhum question√°rio cadastrado.</h3>
 			} else {
 				@for(q <- quiz) {
 					<div class="item-lista">
@@ -22,25 +22,25 @@
 							<div class="item">
 								<h2>
 									<a href="@routes.QuizController.visualizar(q.id)">
-										@q.name 
+										@q.name
 									</a>
 								</h2>
 								<div style=" padding-top:10px;">
 									<a href="@routes.QuizController.visualizar(q.id)" class="btn btn-primary"><i class="icon-white icon-list-alt"></i> Visualizar</a>
-									
-									@if(isLogado()) { 
+
+									@if(isLogado()) {
 										@if(getUsuarioLogado().isAdministrador) {
 											<a href="@routes.QuizController.editar(q.id)" class="btn"><i class="icon-edit"></i> Editar</a>
 											<a href="@routes.QuizController.deletar(q.id)" onclick="return confirm('Deseja realmente excluir o campus &quot;@q.name&quot;?')" class="btn"><i class="icon-remove"></i> Excluir</a>
-										} 
-									} 
+										}
+									}
 								</div>
 							 <br /><br />
-							</div> 
+							</div>
 						</div>
 					</div>
 				 }
-           } 
+           }
         </div>
     }
 }

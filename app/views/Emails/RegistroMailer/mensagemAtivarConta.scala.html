@@ -2,19 +2,19 @@
 
 @layoutEmail {
 	@*
-	<p>Ol· <strong>@usuario.nome</strong>, seu cadastro no Primo Nerd j· foi criado no dia @usuario.dataCadastro !</p>
+	<p>Ol√° <strong>@usuario.nome</strong>, seu cadastro no Primo Nerd j√° foi criado no dia @usuario.dataCadastro !</p>
 	<p>
-		Para poder desfrutar de todas as funcionalidades do sistema È preciso ativar sua conta.<br/>
-		Clique no link abaixo para ativ·-la agora mesmo!<br/>
-		
+		Para poder desfrutar de todas as funcionalidades do sistema √© preciso ativar sua conta.<br/>
+		Clique no link abaixo para ativ√°-la agora mesmo!<br/>
+
 		<a href="@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)">@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)</a>
 	</p>
-	
+
 	<br/>
 	<p>
-		Atenciosamente, <br/> 
+		Atenciosamente, <br/>
 		Equipe Primo Nerd
 	</p>
-	
+
 	*@
 }

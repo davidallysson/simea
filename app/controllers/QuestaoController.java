@@ -29,12 +29,12 @@ public class QuestaoController extends Controller {
 	public QuestaoController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	public Result index() {
 		List<Questao> questoes = Questao.find.findList();
 		return ok(views.html.Questao.index.render(questoes));
 	}
-	
+
 	public Result visualizar(Long id) {
 		/*
 		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
@@ -42,14 +42,14 @@ public class QuestaoController extends Controller {
 		*/
 		return TODO;
 	}
-	
+
 	@Permissao("Administrador")
-	public Result formulario() {  
+	public Result formulario() {
 		List<Quiz> quiz = Quiz.find.findList();
 		List<Eixo> eixos = Eixo.find.findList();
         return ok(views.html.Questao.formulario.render(formFactory.form(Questao.class),eixos,quiz));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		List<Quiz> quiz = Quiz.find.findList();
@@ -65,32 +65,33 @@ public class QuestaoController extends Controller {
         questao.eixo = Eixo.find.byId(idEixo);
         questao.quiz = Quiz.find.byId(idQuiz);
         questao.usuario = InformacoesUsuarioHelper.getUsuarioLogado();
+				// questao.status = true;
         questao.save();
-      
+
         Answer alternativa1 = new Answer(questaoForm.get().alternativa1, true, questao, 1, 1);
         alternativa1.save();
-        
+
         Answer alternativa2 = new Answer(questaoForm.get().alternativa2, true, questao, 2, 2);
         alternativa2.save();
-        
+
         Answer alternativa3 = new Answer(questaoForm.get().alternativa3, true, questao, 3, 3);
         alternativa3.save();
-        
+
         Answer alternativa4 = new Answer(questaoForm.get().alternativa4, true, questao, 4, 4);
         alternativa4.save();
-        
-        
+
+
         flash("success", "Pergunta: " + questaoForm.get().pergunta + " foi cadastrada");
         return redirect(routes.QuestaoController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 //		Campus campus = Campus.find.byId(id);
 //		Form<Campus> campusForm = formFactory.form(Campus.class).fill(campus);
 //	    return ok(views.html.Campus.formularioEdicao.render(campusForm, campus));
 		return TODO;
 	}
-	
+
 	public Result editar(Long id) {
 //		Campus campus = Campus.find.byId(id);
 //		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
@@ -113,7 +114,7 @@ public class QuestaoController extends Controller {
 //        return redirect(routes.CampusController.index());
 		return TODO;
 	}
-	
+
 	public Result deletar(Long id) {
 //		Campus campus = Campus.find.byId(id);
 //		if(campus==null){

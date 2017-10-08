@@ -17,7 +17,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 @Singleton
-public class InativosController  extends Controller {
+public class InativosController extends Controller {
 
 	private FormFactory formFactory;
 
@@ -25,7 +25,7 @@ public class InativosController  extends Controller {
 	public InativosController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	/**
 	 * Lista os formularios de inativos criados
 	 * @return
@@ -34,7 +34,7 @@ public class InativosController  extends Controller {
 		List<Eixo> eixo = Eixo.find.findList();
 		return ok(views.html.Eixo.index.render(eixo));
 	}
-	
+
 	/**
 	 * Form para criar um formulario pelo admin
 	 * @return
@@ -43,7 +43,7 @@ public class InativosController  extends Controller {
 		List<Eixo> eixo = Eixo.find.findList();
 		return ok(views.html.Eixo.index.render(eixo));
 	}
-	
+
 	/**
 	 * Form para os alunos inativos responderem
 	 * @return
@@ -51,7 +51,7 @@ public class InativosController  extends Controller {
 	public Result formularioResponderInativos() {
 		return ok(views.html.Inativos.formularioResponderInativos.render(formFactory.form(InativoForm.class)));
 	}
-	
+
 	public Result responder() {
 		Form<InativoForm> form=formFactory.form(InativoForm.class).bindFromRequest();
 		if (form.hasErrors()) {
@@ -64,5 +64,5 @@ public class InativosController  extends Controller {
 			flash("success","Agradecemos as suas respostas!");
 			return redirect(routes.HomeController.homeIndex());
 		}
-	} 
+	}
 }

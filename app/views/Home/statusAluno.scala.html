@@ -3,7 +3,7 @@
 @import helpers.Seguranca.InformacoesUsuarioHelper._
 
 @base("", "", extraScripts= Html("")){
-    @utils.panel("Antes de seguirmos no question&aacute;rio, precisamos saber como est&aacute; sua situa��o acad&ecirc;mica"){
+    @utils.panel("Antes de seguirmos no questionário, precisamos saber como está sua situação acadêmica"){
         <div class="x_content">
                @helper.form(action = controllers.routes.AlunoController.editarStatusAluno(), 'class -> "form-horizontal form-label-left" , 'id -> "statusAluno" ) {
        			<div class="form-group" id="idCampus_field">

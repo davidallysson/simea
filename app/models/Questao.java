@@ -29,6 +29,8 @@ public class Questao extends Model{
 
 	public String pergunta;
 
+	// public boolean status;
+
 	@Transient
 	public String alternativa1;
 

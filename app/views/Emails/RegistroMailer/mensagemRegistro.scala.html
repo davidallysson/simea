@@ -1,18 +1,17 @@
 @(usuario: Usuario)
 
 @layoutEmail {
-	<p>Ol� <strong>@usuario.nome</strong>, seu cadastro no SIMEA foi criado com sucesso!</p>
+	<p>Olá <strong>@usuario.nome</strong>, seu cadastro no SIMEA foi criado com sucesso!</p>
 	<p>
-	Para poder fazer parte da nossa rede e ter sempre um amigo por perto para tirar suas d�vidas � preciso ativar a sua conta <br/>
-		Clique no link abaixo para ativ�-la agora mesmo!<br/>
-		@*
-		<a href="@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)">@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)</a>
-		*@	
+	Para poder fazer parte da nossa rede e para que possamos avaliar seu índice de evasão é preciso ativar a sua conta. <br/>
+	Clique no link abaixo para ativá-la agora mesmo!<br/>
+	@*
+	<a href="@routes.Sessions.ativarConta(usuario.email).absoluteURL(request)"> @routes.Sessions.ativarConta(usuario.email).absoluteURL(request)</a>
+	*@
 	</p>
-	
 	<br/>
 	<p>
-		Atenciosamente, <br/> 
+		Atenciosamente, <br/>
 		Equipe SIMEA
 	</p>
 }
