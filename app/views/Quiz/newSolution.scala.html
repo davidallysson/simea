@@ -4,29 +4,28 @@
 
 @base("SIMEA - Sistema de Monitoramente de Evasao de Alunos", "", extraScripts= Html("")){
     @utils.panel(""){
-  
-  <h2>Inicio do Question�rio</h2>
-  &nbsp;
-  
-  @if(getUsuarioLogado() != null){
-	<h3> <strong> Prezado(a) @getUsuarioLogado().nome, </strong> </h3>
-   }
-   <br />
-  <h3>Texto introdutorio apra
-  <h3>Iniciar Quiz Aluno  </h3> 
-  
-  &nbsp;
-  <form class="form-horizontal" action="/solutions" method="POST">
 
-	<br />
-	<br />
+    <h2>Inicio do Questionário</h2>
+    &nbsp;
 
-	<div class="control-group">
-		<div class="controls">
-			<button type="submit"  class="btn-large btn-primary" >START</button>
-		</div>
-	</div>
-  </form>
+    @if(getUsuarioLogado() != null) {
+  	  <h3> <strong> Prezado(a) @getUsuarioLogado().nome, </strong> </h3>
+    }
+     <br />
+    <h3>Caro discente, essa é uma versão do Sistema de Monitoramento de Evasão de Alunos (SIMEA) para testes de validação. Os questionários estão sendo utilizados para avaliação contínua da eficácia dos recursos do sistema, bem como sua otimização, tais questionários estão sendo fragmentados em pequenos componentes para a coleta dos dados, visando assegurar um ritmo constante na coleta de informações.</h3>
+    <h3>Deseja iniciar seu Quiz, @getUsuarioLogado().nome ?</h3>
+
+    &nbsp;
+    <form class="form-horizontal" action="/solutions" method="POST">
+  	  <br />
+  	  <br />
+
+    	<div class="control-group">
+    		<div class="controls">
+    			<button type="submit" class="btn-large btn-primary"> START </button>
+    		</div>
+    	</div>
+    </form>
   }
 
 }
