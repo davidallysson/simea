@@ -1,6 +1,6 @@
 @(questao: Form[Questao], eixos: List[Eixo], quiz: List[Quiz])
 
-@base("Profile", "", extraScripts= Html("")){
+@base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
     @utils.panel("Pergunta"){
         <div class="x_content">
             <br>
@@ -28,11 +28,11 @@
                           </select>
                       </div>
                  </div>
-                 @utils.formInput("T�tulo da Pergunta:","pergunta")
-                 @utils.formInput("Op��o 1:","alternativa1", null, "text", true)
-                 @utils.formInput("Op��o 2:","alternativa2", null, "text", true)
-                 @utils.formInput("Op��o 3:","alternativa3", null, "text", true)
-                 @utils.formInput("Op��o 4:","alternativa4", null, "text", true)
+                 @utils.formInput("Título da Pergunta:","pergunta")
+                 @utils.formInput("Opção 1:","alternativa1", null, "text", true)
+                 @utils.formInput("Opção 2:","alternativa2", null, "text", true)
+                 @utils.formInput("Opção 3:","alternativa3", null, "text", true)
+                 @utils.formInput("Opção 4:","alternativa4", null, "text", true)
            		<div class="ln_solid"></div>
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

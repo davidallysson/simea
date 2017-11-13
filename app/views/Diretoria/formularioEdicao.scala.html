@@ -1,6 +1,6 @@
 @(diretoriaForm: Form[Diretoria], diretoria: Diretoria, campus: List[Campus])
 
-@base("Profile", "Profile", extraScripts= Html("")){
+@base("SIMEA - Sistema de Monitoramento de Evas√£o de Alunos", "", extraScripts= Html("")){
     @utils.panel("Diretoria"){
         <div class="x_content">
             <br>
@@ -11,7 +11,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <select class="form-control" name="idCampus" id="idCampus" >
-                          <option selected hidden>Escolha uma opÁ„o</option>
+                          <option selected hidden>Escolha uma op√ß√£o</option>
 	                            @for(campi <- campus) {
 								  <option value="@campi.id">@campi.nome</option>
 								}

@@ -2,7 +2,7 @@
 
 @import helpers.Seguranca.InformacoesUsuarioHelper._
 
-@base("Profile", "", extraScripts= Html("")){
+@base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
     @utils.panel("Turmas"){
         <div class="x_content">
        		 <div class="title_right">
@@ -14,7 +14,7 @@
               </div>
               <br>
             @if(turmas.size == 0) {
-				<h3>Nenhuma turma cadastrada.</h3>			
+				<h3>Nenhuma turma cadastrada.</h3>
 			} else {
 				@for(turma <- turmas) {
 					<div class="item-lista">
@@ -22,25 +22,25 @@
 							<div class="item">
 								<h2>
 									<a href="@routes.TurmaController.visualizar(turma.id)">
-										@turma.nome 
+										@turma.nome
 									</a>
 								</h2>
 								<div style=" padding-top:10px;">
 									<a href="@routes.TurmaController.visualizar(turma.id)" class="btn btn-primary"><i class="icon-white icon-list-alt"></i> Visualizar</a>
-									
-									@if(isLogado()) { 
+
+									@if(isLogado()) {
 										@if(getUsuarioLogado().isAdministrador) {
 											<a href="@routes.TurmaController.editar(turma.id)" class="btn"><i class="icon-edit"></i> Editar</a>
 											<a href="@routes.TurmaController.deletar(turma.id)" onclick="return confirm('Deseja realmente excluir a turma &quot;@turma.nome&quot;?')" class="btn"><i class="icon-remove"></i> Excluir</a>
-										} 
-									} 
+										}
+									}
 								</div>
 							 <br /><br />
-							</div> 
+							</div>
 						</div>
 					</div>
 				 }
-           } 
+           }
         </div>
     }
 }

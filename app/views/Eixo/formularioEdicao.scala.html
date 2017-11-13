@@ -1,12 +1,12 @@
 @(eixoForm: Form[Eixo], eixo: Eixo)
 
-@base("Profile", "Profile", extraScripts= Html("")){
+@base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
     @utils.panel("Eixo"){
         <div class="x_content">
             <br>
             @helper.form(action = controllers.routes.EixoController.editar(eixo.id), 'class -> "form-horizontal form-label-left" , 'id -> "editEixo" ) {
 
-            @utils.formInput("Campus:", "nome" , eixo.nome)
+            @utils.formInput("Eixo:", "nome" , eixo.nome)
 
             <div class="ln_solid"></div>
                 <div class="form-group">

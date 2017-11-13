@@ -26,12 +26,12 @@ public class CursoController extends Controller {
 	public CursoController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	public Result index() {
 		List<Curso> cursos = Curso.find.findList();
 		return ok(views.html.Curso.index.render(cursos));
 	}
-	
+
 	public Result visualizar(Long id) {
 		/*
 		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
@@ -39,14 +39,14 @@ public class CursoController extends Controller {
 		*/
 		return TODO;
 	}
-	
+
 	@Permissao("Administrador")
 	public Result formulario() {
 		List<Campus> campus = Campus.find.findList();
 		List<Diretoria> diretorias = Diretoria.find.findList();
         return ok(views.html.Curso.formulario.render(formFactory.form(Curso.class),diretorias, campus));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		List<Campus> campus = Campus.find.findList();
@@ -64,7 +64,7 @@ public class CursoController extends Controller {
         flash("success", "Curso " + cursoForm.get().nome + " foi criado");
         return redirect(routes.CursoController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		List<Campus> campus = Campus.find.findList();
 		List<Diretoria> diretorias = Diretoria.find.findList();
@@ -72,7 +72,7 @@ public class CursoController extends Controller {
 		Form<Curso> cursoForm = formFactory.form(Curso.class).fill(curso);
 	    return ok(views.html.Curso.formularioEdicao.render(cursoForm, curso, diretorias,campus));
 	}
-	
+
 	public Result editar(Long id) {
 		List<Campus> campus = Campus.find.findList();
 		List<Diretoria> diretorias = Diretoria.find.findList();
@@ -99,21 +99,19 @@ public class CursoController extends Controller {
             txn.end();
         }
         return redirect(routes.CursoController.index());
-		
+
 	}
-	
+
 	public Result deletar(Long id) {
-		/*Curso diretoria = Curso.find.byId(id);
-		if(diretoria==null){
+		Curso diretoria = Curso.find.byId(id);
+		if(diretoria == null){
 			flash().put("error", "O Curso informado não foi encontrado no Sistema.");
 		}else{
 			 Curso.find.ref(id).delete();
 		}
-		return redirect(routes.DiretoriaController.index());*/
-		
-		return TODO;
+		return redirect(routes.CursoController.index());
 	}
-	
+
 	public Result javascriptRoutes() {
 	    return ok(
 	        JavaScriptReverseRouter.create("jsRoutes",
@@ -144,10 +142,10 @@ public class CursoController extends Controller {
 	    ).as("text/javascript");
 	}
 
-	
+
 	public Result get(Long id) {
 		List<Curso> cursos = Curso.find.where().eq("diretoria_id", id).findList();
 		return ok(play.libs.Json.toJson(cursos));
 	}
-	 
+
 }

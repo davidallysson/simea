@@ -17,7 +17,7 @@ import play.data.*;
 
 @Singleton
 public class CampusController extends Controller {
-	
+
     private FormFactory formFactory;
 
     @Inject
@@ -29,7 +29,7 @@ public class CampusController extends Controller {
 		List<Campus> campus = Campus.find.findList();
 		return ok(views.html.Campus.index.render(campus));
 	}
-	
+
 	public Result visualizar(Long id) {
 		/*
 		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
@@ -37,12 +37,12 @@ public class CampusController extends Controller {
 		*/
 		return TODO;
 	}
-	
+
 	@Permissao("Administrador")
-	public Result formulario() {      
+	public Result formulario() {
         return ok(views.html.Campus.formulario.render(formFactory.form(Campus.class)));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
@@ -53,13 +53,13 @@ public class CampusController extends Controller {
         flash("success", "Campus " + campusForm.get().nome + " foi criado");
         return redirect(routes.CampusController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		Campus campus = Campus.find.byId(id);
 		Form<Campus> campusForm = formFactory.form(Campus.class).fill(campus);
 	    return ok(views.html.Campus.formularioEdicao.render(campusForm, campus));
 	}
-	
+
 	public Result editar(Long id) {
 		Campus campus = Campus.find.byId(id);
 		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
@@ -81,7 +81,7 @@ public class CampusController extends Controller {
         }
         return redirect(routes.CampusController.index());
 	}
-	
+
 	public Result deletar(Long id) {
 		Campus campus = Campus.find.byId(id);
 		if(campus==null){
@@ -91,5 +91,5 @@ public class CampusController extends Controller {
 		}
 		return redirect(routes.CampusController.index());
 	}
-	
+
 }

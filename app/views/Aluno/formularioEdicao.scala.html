@@ -1,6 +1,6 @@
 @(alunoForm: Form[Usuario], aluno: Usuario, turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus])
 
-@base("SIMEA - Sistema de Monitoramento de Evas�o de Alunos", "", extraScripts= Html("")){
+@base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
     @utils.panel("Aluno"){
         <div class="x_content">
             <br>
@@ -25,7 +25,7 @@
                           </select>
                       </div>
                  </div>
-                 
+
 				<div class="form-group" id="idDiretoria_field">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -34,7 +34,7 @@
                           </select>
                       </div>
                  </div>
-                 
+
                  <div class="form-group" id="idCurso_field">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -94,16 +94,16 @@ var plus = function() {
             for (i = 0; i < data.length; i++) {
                 createOption(ddl2, data[i].nome, data[i].id);
             }
-            
+
 	      },
 	      error: function() {
 	        alert("Error!")
 	      }
 	    });
-	 
+
         var shapes = new Array('Square', 'Circle', 'Triangle');
         var names = new Array('John', 'David', 'Sarah');
-      
+
     }
 
  function configureDropDownListsCursos(ddl1,ddl2) {
@@ -119,7 +119,7 @@ var plus = function() {
            for (i = 0; i < data.length; i++) {
                createOption(ddl2, data[i].nome, data[i].id);
            }
-           
+
 	      },
 	      error: function() {
 	        alert("Error!")
@@ -140,15 +140,15 @@ var plus = function() {
            for (i = 0; i < data.length; i++) {
                createOption(ddl2, data[i].nome, data[i].id);
            }
-           
+
 	      },
 	      error: function() {
 	        alert("Error!")
 	      }
 	    });
    }
-    
-    
+
+
     function pop() {
      var dop = document.getElementById("ddl3").value;
      alert(dop);
@@ -163,7 +163,7 @@ var plus = function() {
 
 $(document).ready(function(){
 	$(".navbar .nav:nth-child(1) > li:nth-child(2)").addClass("active");
-	
+
 	$('#formulario').bind('submit', function() {
 		$('#formulario').showLoading();
 	});
@@ -171,11 +171,11 @@ $(document).ready(function(){
 	$('#formularioDuvida').bind('submit', function() {
 		$('#formularioDuvida').showLoading();
 	});
-	
+
 	$("#btnEnviarDuvida").click(function(){
 		$("#modalEnviarDuvida").modal();
 	});
-	
+
 	$("#btnLimpar").click(function(){
 		var estruturaMetodoProposto = $("#estruturaMetodoProposto").val();
 
