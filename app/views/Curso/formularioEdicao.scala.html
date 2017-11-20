@@ -1,7 +1,7 @@
 @(cursoForm: Form[Curso], curso: Curso, diretorias: List[Diretoria], campus: List[Campus])
 
 @base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
-    @utils.panel("Diretoria"){
+    @utils.panel("Curso"){
         <div class="x_content">
             <br>
             @helper.form(action = controllers.routes.CursoController.editar(curso.id), 'class -> "form-horizontal form-label-left" , 'id -> "editCurso" ) {

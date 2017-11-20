@@ -1,180 +1,161 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# An example controller showing a sample home page
-GET     /                           					controllers.HomeController.index
-# An example controller showing how to use dependency injection
-GET     /count                     						controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    					controllers.AsyncController.message
-
+# Pagina Inicial do Sistema
+GET     /                           					    controllers.HomeController.index
 
 # Sistema de Login
-GET     /login             		        				controllers.SessionsController.login
-POST    /acessar       		 							controllers.SessionsController.efetuarLogin()
-GET     /logout											controllers.SessionsController.efetuarlogout()
+GET     /login             		        				    controllers.SessionsController.login
+POST    /acessar       		 							          controllers.SessionsController.efetuarLogin()
+GET     /logout											              controllers.SessionsController.efetuarlogout()
 
-
-# Home Principal 
-GET     /home                          					controllers.HomeController.homeIndex
-
+# Pagina Principal
+GET     /home                          					  controllers.HomeController.homeIndex
 
 # Administracao de Campus
-GET 	/administracao/campus							controllers.CampusController.index
-GET 	/campus/:id/visualizar							controllers.CampusController.visualizar(id: Long)
-GET 	/administracao/campus/cadastro					controllers.CampusController.formulario()
-POST 	/administracao/campus/cadastro					controllers.CampusController.cadastrar()
-GET 	/administracao/campus/:id/editar				controllers.CampusController.formularioEdicao(id: Long)
-POST 	/administracao/campus/:id/editar				controllers.CampusController.editar(id: Long)
-GET 	/administracao/campus/:id/excluir				controllers.CampusController.deletar(id: Long)
+GET 	  /administracao/campus							        controllers.CampusController.index
+GET 	  /administracao/campus/cadastro					  controllers.CampusController.formulario()
+POST 	  /administracao/campus/cadastro					  controllers.CampusController.cadastrar()
+GET 	  /administracao/campus/:id/editar				  controllers.CampusController.formularioEdicao(id: Long)
+POST 	  /administracao/campus/:id/editar				  controllers.CampusController.editar(id: Long)
+GET 	  /administracao/campus/:id/excluir				  controllers.CampusController.deletar(id: Long)
 
 # Administracao de Diretorias
-GET 	/diretoria										controllers.DiretoriaController.get(id: Long)
-GET 	/administracao/diretoria						controllers.DiretoriaController.index
-GET 	/diretoria/:id/visualizar						controllers.DiretoriaController.visualizar(id: Long)
-GET 	/administracao/diretoria/cadastro				controllers.DiretoriaController.formulario()
-POST 	/administracao/diretoria/cadastro				controllers.DiretoriaController.cadastrar()
-GET 	/administracao/diretoria/:id/editar				controllers.DiretoriaController.formularioEdicao(id: Long)
-POST 	/administracao/diretoria/:id/editar				controllers.DiretoriaController.editar(id: Long)
-GET 	/administracao/diretoria/:id/excluir			controllers.DiretoriaController.deletar(id: Long)
+GET 	  /diretoria										            controllers.DiretoriaController.get(id: Long)
+GET 	  /administracao/diretoria						      controllers.DiretoriaController.index
+GET 	  /administracao/diretoria/cadastro				  controllers.DiretoriaController.formulario()
+POST 	  /administracao/diretoria/cadastro			    controllers.DiretoriaController.cadastrar()
+GET 	  /administracao/diretoria/:id/editar			  controllers.DiretoriaController.formularioEdicao(id: Long)
+POST 	  /administracao/diretoria/:id/editar			  controllers.DiretoriaController.editar(id: Long)
+GET 	  /administracao/diretoria/:id/excluir		  controllers.DiretoriaController.deletar(id: Long)
 
 
 # Administracao de Cursos
-GET 	/cursos											controllers.CursoController.get(id: Long)
-GET 	/administracao/cursos							controllers.CursoController.index
-GET 	/diretoria/:id/visualizar						controllers.CursoController.visualizar(id: Long)
-GET 	/administracao/curso/cadastro					controllers.CursoController.formulario()
-POST 	/administracao/curso/cadastro					controllers.CursoController.cadastrar()
-GET 	/administracao/curso/:id/editar					controllers.CursoController.formularioEdicao(id: Long)
-POST 	/administracao/curso/:id/editar					controllers.CursoController.editar(id: Long)
-GET 	/administracao/curso/:id/excluir				controllers.CursoController.deletar(id: Long)
+GET 	  /cursos											              controllers.CursoController.get(id: Long)
+GET 	  /administracao/cursos							        controllers.CursoController.index
+GET 	  /administracao/curso/cadastro	     		 	  controllers.CursoController.formulario()
+POST 	  /administracao/curso/cadastro				 	    controllers.CursoController.cadastrar()
+GET 	  /administracao/curso/:id/editar					  controllers.CursoController.formularioEdicao(id: Long)
+POST 	  /administracao/curso/:id/editar					  controllers.CursoController.editar(id: Long)
+GET 	  /administracao/curso/:id/excluir				  controllers.CursoController.deletar(id: Long)
 
 
 # Administracao de Turmas
-GET 	/turmas											controllers.TurmaController.get(id: Long)
-GET 	/administracao/turmas							controllers.TurmaController.index
-GET 	/turma/:id/visualizar							controllers.TurmaController.visualizar(id: Long)
-GET 	/administracao/turma/cadastro					controllers.TurmaController.formulario()
-POST 	/administracao/turma/cadastro					controllers.TurmaController.cadastrar()
-GET 	/administracao/turma/:id/editar					controllers.TurmaController.formularioEdicao(id: Long)
-POST 	/administracao/turma/:id/editar					controllers.TurmaController.editar(id: Long)
-GET 	/administracao/turma/:id/excluir				controllers.TurmaController.deletar(id: Long)
+GET 	  /turmas											              controllers.TurmaController.get(id: Long)
+GET 	  /administracao/turmas							        controllers.TurmaController.index
+GET 	  /administracao/turma/cadastro					    controllers.TurmaController.formulario()
+POST 	  /administracao/turma/cadastro					    controllers.TurmaController.cadastrar()
+GET 	  /administracao/turma/:id/editar					  controllers.TurmaController.formularioEdicao(id: Long)
+POST 	  /administracao/turma/:id/editar					  controllers.TurmaController.editar(id: Long)
+GET 	  /administracao/turma/:id/excluir				  controllers.TurmaController.deletar(id: Long)
 
 # Administracao de Eixos
-GET 	/eixos											controllers.EixoController.get
-GET 	/administracao/eixo								controllers.EixoController.index
-GET 	/eixo/:id/visualizar							controllers.EixoController.visualizar(id: Long)
-GET 	/administracao/eixo/cadastro					controllers.EixoController.formulario()
-POST 	/administracao/eixo/cadastro					controllers.EixoController.cadastrar()
-GET 	/administracao/eixo/:id/editar					controllers.EixoController.formularioEdicao(id: Long)
-POST 	/administracao/eixo/:id/editar					controllers.EixoController.editar(id: Long)
-GET 	/administracao/eixo/:id/excluir					controllers.EixoController.deletar(id: Long)
+GET 	  /eixos											              controllers.EixoController.get
+GET 	  /administracao/eixo								        controllers.EixoController.index
+GET 	  /administracao/eixo/cadastro					    controllers.EixoController.formulario()
+POST 	  /administracao/eixo/cadastro					    controllers.EixoController.cadastrar()
+GET 	  /administracao/eixo/:id/editar					  controllers.EixoController.formularioEdicao(id: Long)
+POST 	  /administracao/eixo/:id/editar					  controllers.EixoController.editar(id: Long)
+GET 	  /administracao/eixo/:id/excluir					  controllers.EixoController.deletar(id: Long)
 
 # Administracao de Usuarios, Alunos, Supervisores, Admins
-GET 	/alunos											controllers.AlunoController.get
-GET 	/administracao/alunos							controllers.AlunoController.index
-GET 	/aluno/:id/visualizar							controllers.AlunoController.visualizar(id: Long)
-GET 	/administracao/aluno/cadastro					controllers.AlunoController.formulario()
-POST 	/administracao/aluno/cadastro					controllers.AlunoController.cadastrar()
-GET 	/administracao/aluno/:id/editar					controllers.AlunoController.formularioEdicao(id: Long)
-POST 	/administracao/aluno/:id/editar					controllers.AlunoController.editar(id: Long)
-GET 	/administracao/aluno/:id/excluir				controllers.AlunoController.deletar(id: Long)
+GET 	  /alunos											              controllers.AlunoController.get
+GET 	  /administracao/alunos							        controllers.AlunoController.index
+GET 	  /administracao/aluno/cadastro					    controllers.AlunoController.formulario()
+POST 	  /administracao/aluno/cadastro					    controllers.AlunoController.cadastrar()
+GET 	  /administracao/aluno/:id/editar					  controllers.AlunoController.formularioEdicao(id: Long)
+POST 	  /administracao/aluno/:id/editar					  controllers.AlunoController.editar(id: Long)
+GET 	  /administracao/aluno/:id/excluir				  controllers.AlunoController.deletar(id: Long)
 
-GET 	/administracao/administradores					controllers.AdministradorController.index
-GET 	/administrador/:id/visualizar					controllers.AdministradorController.visualizar(id: Long)
-GET 	/administracao/administrador/cadastro			controllers.AdministradorController.formulario()
-POST 	/administracao/administrador/cadastro			controllers.AdministradorController.cadastrar()
-GET 	/administracao/administrador/:id/editar			controllers.AdministradorController.formularioEdicao(id: Long)
-POST 	/administracao/administrador/:id/editar			controllers.AdministradorController.editar(id: Long)
-GET 	/administracao/administrador/:id/excluir		controllers.AdministradorController.deletar(id: Long)
+GET 	  /administracao/administradores					  controllers.AdministradorController.index
+GET 	  /administracao/administrador/cadastro		  controllers.AdministradorController.formulario()
+POST 	  /administracao/administrador/cadastro		  controllers.AdministradorController.cadastrar()
+GET 	  /administracao/administrador/:id/editar	  controllers.AdministradorController.formularioEdicao(id: Long)
+POST 	  /administracao/administrador/:id/editar	  controllers.AdministradorController.editar(id: Long)
+GET 	  /administracao/administrador/:id/excluir  controllers.AdministradorController.deletar(id: Long)
 
-GET 	/administracao/supervisores						controllers.SupervisorController.index
-GET 	/supervisor/:id/visualizar						controllers.SupervisorController.visualizar(id: Long)
-GET 	/administracao/supervisor/cadastro				controllers.SupervisorController.formulario()
-POST 	/administracao/supervisor/cadastro				controllers.SupervisorController.cadastrar()
-GET 	/administracao/supervisor/:id/editar			controllers.SupervisorController.formularioEdicao(id: Long)
-POST 	/administracao/supervisor/:id/editar			controllers.SupervisorController.editar(id: Long)
-GET 	/administracao/supervisor/:id/excluir			controllers.SupervisorController.deletar(id: Long)
+GET 	  /administracao/supervisores						    controllers.SupervisorController.index
+GET 	  /administracao/supervisor/cadastro				controllers.SupervisorController.formulario()
+POST 	  /administracao/supervisor/cadastro				controllers.SupervisorController.cadastrar()
+GET 	  /administracao/supervisor/:id/editar			controllers.SupervisorController.formularioEdicao(id: Long)
+POST 	  /administracao/supervisor/:id/editar			controllers.SupervisorController.editar(id: Long)
+GET 	  /administracao/supervisor/:id/excluir			controllers.SupervisorController.deletar(id: Long)
 
-GET     /administracao/statusAluno						controllers.AlunoController.statusAlunoForm()
-POST    /administracao/statusAluno						controllers.AlunoController.editarStatusAluno()	
-
+GET     /administracao/statusAluno						    controllers.AlunoController.statusAlunoForm()
+POST    /administracao/statusAluno						    controllers.AlunoController.editarStatusAluno()
 
 # Administracao de Perguntas
-GET 	/administracao/questoes							controllers.QuestaoController.index
-GET 	/questao/:id/visualizar							controllers.QuestaoController.visualizar(id: Long)
-GET 	/administracao/questao/cadastro					controllers.QuestaoController.formulario()
-POST 	/administracao/questao/cadastro					controllers.QuestaoController.cadastrar()
-GET 	/administracao/questao/:id/editar				controllers.QuestaoController.formularioEdicao(id: Long)
-POST 	/administracao/questao/:id/editar				controllers.QuestaoController.editar(id: Long)
-GET 	/administracao/questao/:id/excluir				controllers.QuestaoController.deletar(id: Long)
+GET 	  /administracao/questoes							      controllers.QuestaoController.index
+GET 	  /administracao/questao/cadastro					  controllers.QuestaoController.formulario()
+POST 	  /administracao/questao/cadastro					  controllers.QuestaoController.cadastrar()
+GET 	  /administracao/questao/:id/editar				  controllers.QuestaoController.formularioEdicao(id: Long)
+POST 	  /administracao/questao/:id/editar				  controllers.QuestaoController.editar(id: Long)
+GET 	  /administracao/questao/:id/excluir				controllers.QuestaoController.deletar(id: Long)
 
 # Resultados Gráficos
-GET 	/administracao/resultados/consultar				controllers.ResultadosController.consultar
-GET 	/administracao/resultados/consultarDados		controllers.ResultadosController.consultarDados
-GET 	/administracao/resultados/comparar				controllers.ResultadosController.comparar
-GET 	/administracao/resultados/compararDados			controllers.ResultadosController.consultarCompararDados(consultar: Boolean)
-GET		/administracao/resultados/testeOk				controllers.ResultadosController.testeOk
-GET		/administracao/resultados/consultarEvasometro1	controllers.ResultadosController.consultarEvasometro1
-GET		/administracao/resultados/consultarEvasometro2	controllers.ResultadosController.consultarEvasometro2
-GET		/administracao/resultados/consultarEixo1		controllers.ResultadosController.consultarEixo1
-GET		/administracao/resultados/consultarEixo2		controllers.ResultadosController.consultarEixo2
-GET		/administracao/resultados/consultarSexo1		controllers.ResultadosController.consultarSexo1
-GET		/administracao/resultados/consultarSexo2		controllers.ResultadosController.consultarSexo2
-GET		/administracao/resultados/consultarFaixaEtaria1	controllers.ResultadosController.consultarFaixaEtaria1
-GET		/administracao/resultados/consultarFaixaEtaria2	controllers.ResultadosController.consultarFaixaEtaria2
-GET		/administracao/resultados/consultarEstadoCivil1	controllers.ResultadosController.consultarEstadoCivil1
-GET		/administracao/resultados/consultarEstadoCivil2	controllers.ResultadosController.consultarEstadoCivil2
-GET		/administracao/resultados/consultarRaca1		controllers.ResultadosController.consultarRaca1
-GET		/administracao/resultados/consultarRaca2		controllers.ResultadosController.consultarRaca2
-GET		/administracao/resultados/consultarRenda1		controllers.ResultadosController.consultarRenda1
-GET		/administracao/resultados/consultarRenda2		controllers.ResultadosController.consultarRenda2
+GET 	  /administracao/resultados/consultar				           controllers.ResultadosController.consultar
+GET 	  /administracao/resultados/consultarDados		         controllers.ResultadosController.consultarDados
+GET 	  /administracao/resultados/comparar				           controllers.ResultadosController.comparar
+GET 	  /administracao/resultados/compararDados			         controllers.ResultadosController.consultarCompararDados(consultar: Boolean)
+GET		  /administracao/resultados/testeOk				             controllers.ResultadosController.testeOk
+GET		  /administracao/resultados/consultarEvasometro1	     controllers.ResultadosController.consultarEvasometro1
+GET		  /administracao/resultados/consultarEvasometro2	     controllers.ResultadosController.consultarEvasometro2
+GET		  /administracao/resultados/consultarEixo1		         controllers.ResultadosController.consultarEixo1
+GET		  /administracao/resultados/consultarEixo2		         controllers.ResultadosController.consultarEixo2
+GET		  /administracao/resultados/consultarSexo1		         controllers.ResultadosController.consultarSexo1
+GET		  /administracao/resultados/consultarSexo2		         controllers.ResultadosController.consultarSexo2
+GET		  /administracao/resultados/consultarFaixaEtaria1	     controllers.ResultadosController.consultarFaixaEtaria1
+GET		  /administracao/resultados/consultarFaixaEtaria2	     controllers.ResultadosController.consultarFaixaEtaria2
+GET		  /administracao/resultados/consultarEstadoCivil1	     controllers.ResultadosController.consultarEstadoCivil1
+GET		  /administracao/resultados/consultarEstadoCivil2	     controllers.ResultadosController.consultarEstadoCivil2
+GET		  /administracao/resultados/consultarRaca1		         controllers.ResultadosController.consultarRaca1
+GET		  /administracao/resultados/consultarRaca2		         controllers.ResultadosController.consultarRaca2
+GET		  /administracao/resultados/consultarRenda1		         controllers.ResultadosController.consultarRenda1
+GET		  /administracao/resultados/consultarRenda2		         controllers.ResultadosController.consultarRenda2
 
-GET  	/administracao/resultados/exportarCSV			controllers.ResultadosController.exportCSV
-GET  	/administracao/resultados/exportarCSV2			controllers.ResultadosController.exportCSV2
-
-
+GET  	  /administracao/resultados/exportarCSV			           controllers.ResultadosController.exportCSV
+GET  	  /administracao/resultados/exportarCSV2			         controllers.ResultadosController.exportCSV2
 
 # Questionario Inativos
 
-GET		/questao/responderInativos						controllers.InativosController.formularioResponderInativos
-POST	/questao/responder								controllers.InativosController.responder
+GET		  /questao/responderInativos						               controllers.InativosController.formularioResponderInativos
+POST	  /questao/responder								                   controllers.InativosController.responder
 
-# ------------------------------------ ROTAS QUIZ
+# ROTAS QUIZ
 
 GET	    /solutions/:id/question2										controllers.Solutions.recebeQuestion(id: Long)
-GET		/solutions/:id/question											controllers.Solutions.getQuestion(id: Long)
-GET		/solutions														controllers.Solutions.newSolutionForm()
-POST	/solutions														controllers.Solutions.setup()
-GET		/solutions/:id													controllers.Solutions.show(id: Long)
-POST	/solutions/:id													controllers.Solutions.solve(id: Long)
-GET		/solutions/:id/score											controllers.Solutions.getScore(id: Long)
-GET		/solutions/:id/pause											controllers.Solutions.pause(id: Long)
-GET		/solutions/:id/resume											controllers.Solutions.resume(id: Long)
-GET		/solutions/:id/status											controllers.Solutions.toggleStatus(id: Long)
+GET		  /solutions/:id/question											controllers.Solutions.getQuestion(id: Long)
+GET		  /solutions														      controllers.Solutions.newSolutionForm()
+POST	  /solutions														      controllers.Solutions.setup()
+GET		  /solutions/:id													    controllers.Solutions.show(id: Long)
+POST	  /solutions/:id													    controllers.Solutions.solve(id: Long)
+GET		  /solutions/:id/score											  controllers.Solutions.getScore(id: Long)
+GET		  /solutions/:id/pause											  controllers.Solutions.pause(id: Long)
+GET		  /solutions/:id/resume											  controllers.Solutions.resume(id: Long)
+GET		  /solutions/:id/status											  controllers.Solutions.toggleStatus(id: Long)
 
 # Administracao de Quiz
-GET 	/administracao/quiz								controllers.QuizController.index
-GET 	/quiz/:id/visualizar							controllers.QuizController.visualizar(id: Long)
-GET 	/administracao/quiz/cadastro					controllers.QuizController.formulario()
-POST 	/administracao/quiz/cadastro					controllers.QuizController.cadastrar()
-GET 	/administracao/quiz/:id/editar					controllers.QuizController.formularioEdicao(id: Long)
-POST 	/administracao/quiz/:id/editar					controllers.QuizController.editar(id: Long)
-GET 	/administracao/quiz/:id/excluir					controllers.QuizController.deletar(id: Long)
+GET 	/administracao/quiz								            controllers.QuizController.index
+GET 	/quiz/:id/visualizar							            controllers.QuizController.visualizar(id: Long)
+GET 	/administracao/quiz/cadastro					        controllers.QuizController.formulario()
+POST 	/administracao/quiz/cadastro					        controllers.QuizController.cadastrar()
+GET 	/administracao/quiz/:id/editar					      controllers.QuizController.formularioEdicao(id: Long)
+POST 	/administracao/quiz/:id/editar					      controllers.QuizController.editar(id: Long)
+GET 	/administracao/quiz/:id/excluir					      controllers.QuizController.deletar(id: Long)
 
 
 # Administracao de Alternativas - Answer
-GET 	/administracao/alternativas							controllers.AlternativaController.index
-GET 	/alternativa/:id/visualizar							controllers.AlternativaController.visualizar(id: Long)
-GET 	/administracao/alternativa/cadastro					controllers.AlternativaController.formulario()
-POST 	/administracao/alternativa/cadastro					controllers.AlternativaController.cadastrar()
-GET 	/administracao/alternativa/:id/editar				controllers.AlternativaController.formularioEdicao(id: Long)
-POST 	/administracao/alternativa/:id/editar				controllers.AlternativaController.editar(id: Long)
-GET 	/administracao/alternativa/:id/excluir				controllers.QuizController.deletar(id: Long)
+GET 	/administracao/alternativas							      controllers.AlternativaController.index
+GET 	/alternativa/:id/visualizar							      controllers.AlternativaController.visualizar(id: Long)
+GET 	/administracao/alternativa/cadastro					  controllers.AlternativaController.formulario()
+POST 	/administracao/alternativa/cadastro					  controllers.AlternativaController.cadastrar()
+GET 	/administracao/alternativa/:id/editar				  controllers.AlternativaController.formularioEdicao(id: Long)
+POST 	/administracao/alternativa/:id/editar				  controllers.AlternativaController.editar(id: Long)
+GET 	/administracao/alternativa/:id/excluir			  controllers.QuizController.deletar(id: Long)
 
 # Javascript routing
-GET    /javascriptRoutes      							controllers.CursoController.javascriptRoutes()
+GET    /javascriptRoutes      							        controllers.CursoController.javascriptRoutes()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file                               controllers.Assets.versioned(path="/public", file: Asset)

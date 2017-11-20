@@ -35,14 +35,6 @@ public class QuestaoController extends Controller {
 		return ok(views.html.Questao.index.render(questoes));
 	}
 
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-
 	@Permissao("Administrador")
 	public Result formulario() {
 		List<Quiz> quiz = Quiz.find.findList();
@@ -116,13 +108,13 @@ public class QuestaoController extends Controller {
 	}
 
 	public Result deletar(Long id) {
-//		Campus campus = Campus.find.byId(id);
-//		if(campus==null){
-//			flash().put("error", "O Campus informado não foi encontrado no Sistema.");
-//		}else{
-//			 Campus.find.ref(id).delete();
-//		}
-//		return redirect(routes.CampusController.index());
+		// Questao questao = Questao.find.byId(id);
+		// if(questao==null){
+		// 	flash().put("error", "A Questao informada não foi encontrada no Sistema.");
+		// }else{
+		// 	Questao.find.ref(id).delete();
+		// }
+		// return redirect(routes.QuestaoController.index());
 		return TODO;
 	}
 }

@@ -32,21 +32,13 @@ public class AlunoController extends Controller {
 	public AlunoController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	@Permissao("Administrador")
 	public Result index() {
 		List<Usuario> alunos = Usuario.find.where().eq("is_administrador",false).eq("is_supervisor",false).findList();
 		return ok(views.html.Aluno.index.render(alunos));
 	}
-	
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-	
+
 	public Result formulario() {
 		List<Curso> cursos = Curso.find.findList();
 		List<Campus> campus = Campus.find.findList();
@@ -54,7 +46,7 @@ public class AlunoController extends Controller {
 		List<Turma> turmas = Turma.find.findList();
         return ok(views.html.Aluno.formulario.render(formFactory.form(Usuario.class), turmas, cursos, diretorias, campus));
 	}
-	
+
 	public Result cadastrar() {
 		List<Curso> cursos = Curso.find.findList();
 		List<Campus> campus = Campus.find.findList();
@@ -68,15 +60,15 @@ public class AlunoController extends Controller {
         Long idDiretoria = Long.valueOf(alunoForm.data().get("idDiretoria"));
         Long idCurso = Long.valueOf(alunoForm.data().get("idCurso"));
         Long idTurma = Long.valueOf(alunoForm.data().get("idTurma"));
-        
+
         String senha = alunoForm.data().get("password");
-        
+
         String idGenero = alunoForm.data().get("idGenero");
         Long idFaixaEtaria = Long.valueOf(alunoForm.data().get("idFaixaEtaria"));
         Long idEstadoCivil = Long.valueOf(alunoForm.data().get("idEstadoCivil"));
         Long idRaca = Long.valueOf(alunoForm.data().get("idRaca"));
         Long idRenda = Long.valueOf(alunoForm.data().get("idRenda"));
-        
+
         Usuario usuario = alunoForm.get();
         usuario.campus = Campus.find.byId(idCampus);
         usuario.diretoria = Diretoria.find.byId(idDiretoria);
@@ -89,7 +81,7 @@ public class AlunoController extends Controller {
         usuario.estadoCivil = idEstadoCivil.intValue();
         usuario.raca = idRaca.intValue();
         usuario.renda = idRenda.intValue();
-        
+
         if(idGenero.equalsIgnoreCase("M")){
         	usuario.masculino=true;
         	usuario.feminino=false;
@@ -97,12 +89,12 @@ public class AlunoController extends Controller {
         	usuario.masculino=false;
         	usuario.feminino=true;
         }
-        
+
         usuario.save();
-        
+
         // Envia o email de confirmação de cadastro no sistema!
      	RegistroMailer.enviarMensagemRegistro(usuario);
-     			
+
         if(InformacoesUsuarioHelper.isLogado()&&InformacoesUsuarioHelper.getUsuarioLogado().isAdministrador){
         	flash("success", "Cadastrado realizado com sucesso!");
         	 return redirect(routes.AlunoController.index());
@@ -111,9 +103,9 @@ public class AlunoController extends Controller {
         	session().put("usuarioLogadoID", usuario.id.toString());
         	return redirect(routes.HomeController.homeIndex());
         }
-       
+
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		List<Curso> cursos = Curso.find.findList();
 		List<Campus> campus = Campus.find.findList();
@@ -123,7 +115,7 @@ public class AlunoController extends Controller {
 		Form<Usuario> alunoForm = formFactory.form(Usuario.class).fill(aluno);
 	    return ok(views.html.Aluno.formularioEdicao.render(alunoForm, aluno, turmas, cursos, diretorias, campus));
 	}
-	
+
 	public Result editar(Long id) {
 		List<Curso> cursos = Curso.find.findList();
 		List<Campus> campus = Campus.find.findList();
@@ -135,13 +127,13 @@ public class AlunoController extends Controller {
 		Long idDiretoria = Long.valueOf(alunoForm.data().get("idDiretoria"));
 		Long idCurso = Long.valueOf(alunoForm.data().get("idCurso"));
 		Long idTurma = Long.valueOf(alunoForm.data().get("idTurma"));
-		
+
         if(alunoForm.hasErrors()) {
         	System.out.println(alunoForm.errors());
             return badRequest(views.html.Aluno.formularioEdicao.render(alunoForm, aluno, turmas, cursos, diretorias, campus));
         }
         String senha = alunoForm.data().get("password");
-        
+
         Transaction txn = Ebean.beginTransaction();
         try {
             Usuario usuarioEdicao = Usuario.find.byId(id);
@@ -164,11 +156,17 @@ public class AlunoController extends Controller {
         }
         return redirect(routes.AlunoController.index());
 	}
-	
+
 	public Result deletar(Long id) {
-		 return TODO;
+		Usuario aluno = Usuario.find.byId(id);
+		if(aluno==null){
+		 flash().put("error", "O Aluno informado não foi encontrado no Sistema.");
+		}else{
+			Usuario.find.ref(id).delete();
+		}
+		return redirect(routes.AlunoController.index());
 	}
-	
+
 	public Result statusAlunoForm() {
 		UsuarioStatusForm aluno = new UsuarioStatusForm();
 		return ok(views.html.Home.statusAluno.render(aluno));
@@ -210,7 +208,7 @@ public class AlunoController extends Controller {
 			}
 		}
 	}
-	
+
 	public Result get() {
 		List<Usuario> alunos = Usuario.find.where().eq("isAdministrador", false).eq("isSupervisor", false).findList();
 		return ok(play.libs.Json.toJson(alunos));

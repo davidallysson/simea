@@ -20,33 +20,25 @@ import play.mvc.Result;
 
 @Singleton
 public class DiretoriaController extends Controller  {
-	
+
 	private FormFactory formFactory;
 
 	@Inject
 	public DiretoriaController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	public Result index() {
 		List<Diretoria> diretoria = Diretoria.find.findList();
 		return ok(views.html.Diretoria.index.render(diretoria));
 	}
-	
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-	
+
 	@Permissao("Administrador")
 	public Result formulario() {
 		List<Campus> campus = Campus.find.findList();
         return ok(views.html.Diretoria.formulario.render(formFactory.form(Diretoria.class), campus));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		List<Campus> campus = Campus.find.findList();
@@ -61,14 +53,14 @@ public class DiretoriaController extends Controller  {
         flash("success", "Diretoria " + diretoriaForm.get().nome + " foi criado");
         return redirect(routes.DiretoriaController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		List<Campus> campus = Campus.find.findList();
 		Diretoria diretoria = Diretoria.find.byId(id);
 		Form<Diretoria> diretoriaForm = formFactory.form(Diretoria.class).fill(diretoria);
 	    return ok(views.html.Diretoria.formularioEdicao.render(diretoriaForm, diretoria,campus));
 	}
-	
+
 	public Result editar(Long id) {
 		List<Campus> campus = Campus.find.findList();
 		Diretoria diretoria = Diretoria.find.byId(id);
@@ -93,7 +85,7 @@ public class DiretoriaController extends Controller  {
         }
         return redirect(routes.DiretoriaController.index());
 	}
-	
+
 	public Result deletar(Long id) {
 		Diretoria diretoria = Diretoria.find.byId(id);
 		if(diretoria==null){
@@ -101,13 +93,9 @@ public class DiretoriaController extends Controller  {
 		}else{
 			 Diretoria.find.ref(id).delete();
 		}
-		return redirect(routes.DiretoriaController.index()); 
+		return redirect(routes.DiretoriaController.index());
 	}
-	
-	public Diretoria list(){
-		return null;
-	}
-	
+
 	//var data = { 'one':1, 'two':2 };
 	public Result get(Long id) {
 		List<Diretoria> diretoria = Diretoria.find.where().eq("campus_id", id).findList();

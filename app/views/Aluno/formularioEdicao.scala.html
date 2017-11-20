@@ -9,9 +9,12 @@
        			@utils.formInput("E-mail:","email", aluno.email)
        			@utils.formInput("Matricula:","matricula", aluno.matricula)
        			<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Password:</label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha:</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="password" class="form-control" id="password" name="password" >
+                        <input type="password" class="form-control" id="password" name="password" pattern="\w{6,}" required>
+                        <span class="alert alert-secondary" role="alert">
+                          A senha deverá conter no mínimo 6 caracteres.
+                        </span>
                       </div>
                 </div>
            		<div class="form-group" id="idCampus_field">

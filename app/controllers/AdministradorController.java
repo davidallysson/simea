@@ -25,26 +25,18 @@ public class AdministradorController extends Controller {
     public AdministradorController(FormFactory formFactory) {
         this.formFactory = formFactory;
     }
-	
+
 	public Result index() {
 		List<Usuario> administradores = Usuario.find.where().eq("is_administrador",true).eq("is_supervisor",false).findList();
 		return ok(views.html.Administrador.index.render(administradores));
 	}
-	
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
+
+	@Permissao("Administrador")
+	public Result formulario() {
+    // return ok(views.html.Administrador.formulario.render(formFactory.form(Usuario.class)));
 		return TODO;
 	}
-	
-	@Permissao("Administrador")
-	public Result formulario() {      
-        //return ok(views.html.Campus.formulario.render(formFactory.form(Campus.class)));
-        return TODO;
-	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 //		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
@@ -56,14 +48,14 @@ public class AdministradorController extends Controller {
 //        return redirect(routes.CampusController.index());
 		return TODO;
 	}
-	
+
 	public Result formularioEdicao(Long id) {
-//		Campus campus = Campus.find.byId(id);
-//		Form<Campus> campusForm = formFactory.form(Campus.class).fill(campus);
-//	    return ok(views.html.Campus.formularioEdicao.render(campusForm, campus));
+		// Usuario administrador = Usuario.find.byId(id);
+		// Form<Usuario> administradorForm = formFactory.form(Usuario.class).fill(administrador);
+	  // return ok(views.html.Campus.formularioEdicao.render(administradorForm, administrador));
 		return TODO;
 	}
-	
+
 	public Result editar(Long id) {
 //		Campus campus = Campus.find.byId(id);
 //		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
@@ -86,15 +78,14 @@ public class AdministradorController extends Controller {
 //        return redirect(routes.CampusController.index());
 		return TODO;
 	}
-	
+
 	public Result deletar(Long id) {
-//		Campus campus = Campus.find.byId(id);
-//		if(campus==null){
-//			flash().put("error", "O Campus informado não foi encontrado no Sistema.");
-//		}else{
-//			 Campus.find.ref(id).delete();
-//		}
-//		return redirect(routes.CampusController.index());
-		return TODO;
+		Usuario administradores = Usuario.find.byId(id);
+		if(administradores==null){
+			flash().put("error", "O Administrador informado não foi encontrado no Sistema.");
+		}else{
+			 Usuario.find.ref(id).delete();
+		}
+		return redirect(routes.AdministradorController.index());
 	}
 }

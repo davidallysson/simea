@@ -18,29 +18,21 @@ import play.data.*;
 @Singleton
 public class CampusController extends Controller {
 
-    private FormFactory formFactory;
+  private FormFactory formFactory;
 
-    @Inject
-    public CampusController(FormFactory formFactory) {
-        this.formFactory = formFactory;
-    }
+  @Inject
+  public CampusController(FormFactory formFactory) {
+      this.formFactory = formFactory;
+  }
 
 	public Result index() {
 		List<Campus> campus = Campus.find.findList();
 		return ok(views.html.Campus.index.render(campus));
 	}
 
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-
 	@Permissao("Administrador")
 	public Result formulario() {
-        return ok(views.html.Campus.formulario.render(formFactory.form(Campus.class)));
+    return ok(views.html.Campus.formulario.render(formFactory.form(Campus.class)));
 	}
 
 	@Permissao("Administrador")
@@ -85,9 +77,9 @@ public class CampusController extends Controller {
 	public Result deletar(Long id) {
 		Campus campus = Campus.find.byId(id);
 		if(campus==null){
-			flash().put("error", "O Campus informado não foi encontrado no Sistema.");
+		  flash().put("error", "O Campus informado não foi encontrado no Sistema.");
 		}else{
-			 Campus.find.ref(id).delete();
+			Campus.find.ref(id).delete();
 		}
 		return redirect(routes.CampusController.index());
 	}
