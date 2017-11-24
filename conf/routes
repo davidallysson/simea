@@ -137,7 +137,6 @@ GET		  /solutions/:id/status											  controllers.Solutions.toggleStatus(id: 
 
 # Administracao de Quiz
 GET 	/administracao/quiz								            controllers.QuizController.index
-GET 	/quiz/:id/visualizar							            controllers.QuizController.visualizar(id: Long)
 GET 	/administracao/quiz/cadastro					        controllers.QuizController.formulario()
 POST 	/administracao/quiz/cadastro					        controllers.QuizController.cadastrar()
 GET 	/administracao/quiz/:id/editar					      controllers.QuizController.formularioEdicao(id: Long)

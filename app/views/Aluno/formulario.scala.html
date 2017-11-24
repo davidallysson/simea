@@ -42,113 +42,113 @@
 
        			</div>
        			<div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha:</label>
-                      <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input type="password" class="form-control" id="password" name="password" required pattern="\w{6,}">
-                        <span class="alert alert-secondary" role="alert">
-                          A senha deverá conter no mínimo 6 caracteres.
-                        </span>
-                      </div>
-                </div>
-                <div class="form-group" id="idFaixaEtaria_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Faixa Etária:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idFaixaEtaria" id="idFaixaEtaria" >
-	                             <option selected hidden>Escolha uma opcao</option>
-	                             <option value="1">15 a 19 anos</option>
-	                              <option value="2">20 a 24 anos</option>
-	                               <option value="3">25 a 29 anos</option>
-	                                <option value="4">30 a 34 anos</option>
-	                                 <option value="5">35 a 39 anos</option>
-	                                 <option value="6">40 ou mais</option>
-                          </select>
-                      </div>
-                 </div>
-                 <div class="form-group" id="idEstadoCivil_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Estado Civil:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idEstadoCivil" id="idEstadoCivil" >
-	                             <option selected hidden>Escolha uma opcao</option>
-	                             <option value="1">Solteiro</option>
-	                              <option value="2">Casado</option>
-	                               <option value="3">Divorciado</option>
-	                                <option value="4">Separado</option>
-	                                 <option value="5">Viúvo</option>
-                          </select>
-                      </div>
-                 </div>
-                  <div class="form-group" id="idRaca_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Raça/cor:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idRaca" id="idRaca" >
-	                             <option selected hidden>Escolha uma opcao</option>
-	                             <option value="1">Branca</option>
-	                              <option value="2">Preta</option>
-	                               <option value="3">Parda</option>
-	                                <option value="4">Amarela</option>
-	                                 <option value="5">Indigina</option>
-	                                  <option value="5">Sem Declaracao</option>
-                          </select>
-                      </div>
-                 </div>
-                 <div class="form-group" id="idRenda_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Renda Familiar:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idRenda" id="idRenda" >
-	                             <option selected hidden>Escolha uma opcao</option>
-	                             <option value="1">Até 1 Salário mínimo</option>
-	                              <option value="2">De 1 a 3 salários mínimos</option>
-	                               <option value="3">De 4 a 6 salários mínimos</option>
-	                                <option value="4">De 7 a 9 salários mínimos</option>
-	                                 <option value="5">10 ou mais salários mínimos</option>
-                          </select>
-                      </div>
-                 </div>
-				<div class="form-group" id="idCampus_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
-	                            <option selected hidden>Escolha uma opcao</option>
-	                            @for(campi <- campus) {
-							 		 <option value="@campi.id">@campi.nome</option>
-								}
-                          </select>
-                      </div>
-                 </div>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha:</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="password" class="form-control" id="password" name="password" required pattern="\w{6,}">
+                    <span class="alert alert-secondary" role="alert">
+                      A senha deverá conter no mínimo 6 caracteres.
+                    </span>
+                  </div>
+            </div>
+            <div class="form-group" id="idFaixaEtaria_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Faixa Etária:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idFaixaEtaria" id="idFaixaEtaria" >
+                           <option selected hidden>Escolha uma opcao</option>
+                           <option value="1">15 a 19 anos</option>
+                            <option value="2">20 a 24 anos</option>
+                             <option value="3">25 a 29 anos</option>
+                              <option value="4">30 a 34 anos</option>
+                               <option value="5">35 a 39 anos</option>
+                               <option value="6">40 ou mais</option>
+                      </select>
+                  </div>
+             </div>
+             <div class="form-group" id="idEstadoCivil_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Estado Civil:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idEstadoCivil" id="idEstadoCivil" >
+                           <option selected hidden>Escolha uma opcao</option>
+                           <option value="1">Solteiro</option>
+                            <option value="2">Casado</option>
+                             <option value="3">Divorciado</option>
+                              <option value="4">Separado</option>
+                               <option value="5">Viúvo</option>
+                      </select>
+                  </div>
+             </div>
+             <div class="form-group" id="idRaca_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Raça/cor:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idRaca" id="idRaca" >
+                           <option selected hidden>Escolha uma opcao</option>
+                           <option value="1">Branca</option>
+                            <option value="2">Preta</option>
+                             <option value="3">Parda</option>
+                              <option value="4">Amarela</option>
+                               <option value="5">Indigina</option>
+                                <option value="5">Sem Declaracao</option>
+                      </select>
+                  </div>
+             </div>
+             <div class="form-group" id="idRenda_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Renda Familiar:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idRenda" id="idRenda" >
+                           <option selected hidden>Escolha uma opcao</option>
+                           <option value="1">Até 1 Salário mínimo</option>
+                            <option value="2">De 1 a 3 salários mínimos</option>
+                             <option value="3">De 4 a 6 salários mínimos</option>
+                              <option value="4">De 7 a 9 salários mínimos</option>
+                               <option value="5">10 ou mais salários mínimos</option>
+                      </select>
+                  </div>
+             </div>
+		         <div class="form-group" id="idCampus_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
+                          <option selected hidden>Escolha uma opcao</option>
+                          @for(campi <- campus) {
+          							 		 <option value="@campi.id">@campi.nome</option>
+          								}
+                      </select>
+                  </div>
+             </div>
 
-                 <div class="form-group" id="idDiretoria_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >
-	                            <option selected hidden>Escolha uma opcao</option>
-                          </select>
-                      </div>
-                 </div>
+             <div class="form-group" id="idDiretoria_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >
+                          <option selected hidden>Escolha uma opcao</option>
+                      </select>
+                  </div>
+             </div>
 
-                 <div class="form-group" id="idCurso_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idCurso" id="idCurso"  onchange="configureDropDownListsTurmas(this,document.getElementById('idTurma'))" >
-	                            <option selected hidden>Escolha uma opcao</option>
-                          </select>
-                      </div>
-                 </div>
+             <div class="form-group" id="idCurso_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idCurso" id="idCurso"  onchange="configureDropDownListsTurmas(this,document.getElementById('idTurma'))" >
+                          <option selected hidden>Escolha uma opcao</option>
+                      </select>
+                  </div>
+             </div>
 
-                 <div class="form-group" id="idTurma_field">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="idTurma" id="idTurma" >
-	                            <option selected hidden>Escolha uma opcao</option>
-                          </select>
-                      </div>
-                 </div>
-           		<div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                        <a href="@routes.HomeController.homeIndex" class="btn">Cancelar</a>
-                    </div>
-                </div>
+             <div class="form-group" id="idTurma_field">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <select class="form-control" name="idTurma" id="idTurma" >
+                          <option selected hidden>Escolha uma opcao</option>
+                      </select>
+                  </div>
+             </div>
+           	 <div class="ln_solid"></div>
+             <div class="form-group">
+                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                      <button type="submit" class="btn btn-success">Salvar</button>
+                      <a href="@routes.HomeController.homeIndex" class="btn">Cancelar</a>
+                  </div>
+             </div>
             }
         </div>
     }

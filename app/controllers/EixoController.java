@@ -24,25 +24,17 @@ public class EixoController extends Controller {
 	public EixoController(FormFactory formFactory) {
 		this.formFactory = formFactory;
 	}
-	
+
 	public Result index() {
 		List<Eixo> eixo = Eixo.find.findList();
 		return ok(views.html.Eixo.index.render(eixo));
 	}
 	
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-	
 	@Permissao("Administrador")
-	public Result formulario() {      
+	public Result formulario() {
         return ok(views.html.Eixo.formulario.render(formFactory.form(Eixo.class)));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		Form<Eixo> eixoForm = formFactory.form(Eixo.class).bindFromRequest();
@@ -53,13 +45,13 @@ public class EixoController extends Controller {
         flash("success", "Eixo " + eixoForm.get().nome + " foi criado");
         return redirect(routes.EixoController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		Eixo eixo = Eixo.find.byId(id);
 		Form<Eixo> eixoForm = formFactory.form(Eixo.class).fill(eixo);
 	    return ok(views.html.Eixo.formularioEdicao.render(eixoForm, eixo));
 	}
-	
+
 	public Result editar(Long id) {
 		Eixo eixo = Eixo.find.byId(id);
 		Form<Eixo> eixoForm = formFactory.form(Eixo.class).bindFromRequest();
@@ -81,7 +73,7 @@ public class EixoController extends Controller {
         }
         return redirect(routes.EixoController.index());
 	}
-	
+
 	public Result deletar(Long id) {
 		Eixo eixo = Eixo.find.byId(id);
 		if(eixo==null){
@@ -91,7 +83,7 @@ public class EixoController extends Controller {
 		}
 		return redirect(routes.EixoController.index());
 	}
-	
+
 	public Result get() {
 		List<Eixo> eixo = Eixo.find.where().findList();
 		return ok(play.libs.Json.toJson(eixo));

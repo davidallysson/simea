@@ -147,9 +147,9 @@ public class AlunoController extends Controller {
             	 usuarioEdicao.isAdministrador = false;
             	 usuarioEdicao.isSupervisor = false;
             	 usuarioEdicao.password = senha;
-            	 usuarioEdicao.save();
-                flash("success", "Aluno " + usuarioEdicao.nome + " foi atualizado");
-                txn.commit();
+            	 usuarioEdicao.update();
+               flash("success", "Aluno " + usuarioEdicao.nome + " foi atualizado");
+               txn.commit();
             }
         } finally {
             txn.end();

@@ -1,0 +1,45 @@
+@(questaoForm: Form[Questao], questao: Questao, eixos: List[Eixo], quiz: List[Quiz], alternativas: List[Answer])
+
+@base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
+    @utils.panel("Pergunta"){
+        <div class="x_content">
+            <br>
+            @helper.form(action = controllers.routes.QuestaoController.editar(questao.id), 'class -> "form-horizontal form-label-left" , 'id -> "editQuestao" ) {
+
+  				<div class="form-group" id="idQuiz_field">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Questionario:</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" name="idQuiz" id="idQuiz" >
+                    <option selected hidden>Escolha uma opcao</option>
+                        @for(q <- quiz) {
+        								  <option value="@q.id">@q.name</option>
+        								}
+                    </select>
+                </div>
+          </div>
+  				<div class="form-group" id="idEixo_field">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Eixo:</label>
+                  <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" name="idEixo" id="idEixo" >
+                    <option selected hidden>Escolha uma opcao</option>
+                        @for(eixo <- eixos) {
+        								  <option value="@eixo.id">@eixo.nome</option>
+        								}
+                    </select>
+                </div>
+          </div>
+           @utils.formInput("Título da Pergunta:","pergunta", questao.pergunta)
+           @utils.formInput("Opção 1:","alternativa1", alternativas.get(0).answer, "text", true)
+           @utils.formInput("Opção 2:","alternativa2", alternativas.get(1).answer, "text", true)
+           @utils.formInput("Opção 3:","alternativa3", alternativas.get(2).answer, "text", true)
+           @utils.formInput("Opção 4:","alternativa4", alternativas.get(3).answer, "text", true)
+       		<div class="ln_solid"></div>
+          <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+          </div>
+            }
+        </div>
+    }
+}

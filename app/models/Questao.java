@@ -69,6 +69,10 @@ public class Questao extends Model{
 		this.usuario = usuario;
 	}
 
+	public String getPergunta() {
+		return this.pergunta;
+	}
+
 	public static Finder<Long, Questao> find = new Finder<Long,Questao>(Questao.class);
 
 	public List<Answer> getAnswers() {

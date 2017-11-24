@@ -23,51 +23,43 @@ public class QuizController extends Controller {
 
 	private FormFactory formFactory;
 
-    @Inject
-    public QuizController(FormFactory formFactory) {
-        this.formFactory = formFactory;
-    }
-    
-    public Result index() {
+  @Inject
+  public QuizController(FormFactory formFactory) {
+      this.formFactory = formFactory;
+  }
+
+  public Result index() {
 		List<Quiz> campus = Quiz.find.findList();
 		return ok(views.html.Quiz.index.render(campus));
 	}
-	
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-	
+
 	@Permissao("Administrador")
-	public Result formulario() {      
-        return ok(views.html.Quiz.formulario.render(formFactory.form(Quiz.class)));
+	public Result formulario() {
+    return ok(views.html.Quiz.formulario.render(formFactory.form(Quiz.class)));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		Form<Quiz> quizForm = formFactory.form(Quiz.class).bindFromRequest();
-        if(quizForm.hasErrors()) {
-            return badRequest(views.html.Quiz.formulario.render(quizForm));
-        }
-        quizForm.get().difficulty = 1;
-        quizForm.get().creator = InformacoesUsuarioHelper.getUsuarioLogado();
-        quizForm.get().active = true;
-        quizForm.get().start = new Date();
-        quizForm.get().fim = new Date();
-        quizForm.get().save();
-        flash("success", "Questionário " + quizForm.get().name + " foi criado");
-        return redirect(routes.QuizController.index());
+    if(quizForm.hasErrors()) {
+        return badRequest(views.html.Quiz.formulario.render(quizForm));
+    }
+    quizForm.get().difficulty = 1;
+    quizForm.get().creator = InformacoesUsuarioHelper.getUsuarioLogado();
+    quizForm.get().active = true;
+    quizForm.get().start = new Date();
+    quizForm.get().fim = new Date();
+    quizForm.get().save();
+    flash("success", "Questionário " + quizForm.get().name + " foi criado");
+    return redirect(routes.QuizController.index());
 	}
-	
+
 	public Result formularioEdicao(Long id) {
 		Quiz quiz = Quiz.find.byId(id);
 		Form<Quiz> quizForm = formFactory.form(Quiz.class).fill(quiz);
-	    return ok(views.html.Quiz.formularioEdicao.render(quizForm, quiz));
+	  return ok(views.html.Quiz.formularioEdicao.render(quizForm, quiz));
 	}
-	
+
 	public Result editar(Long id) {
 		Quiz quiz = Quiz.find.byId(id);
 		Form<Quiz> quizForm = formFactory.form(Quiz.class).bindFromRequest();
@@ -85,15 +77,15 @@ public class QuizController extends Controller {
             	quizEdicao.start = new Date();
             	quizEdicao.fim = new Date();
             	quizEdicao.update();
-                flash("success", "Questionário: " + quizForm.get().name + " foi atualizado");
-                txn.commit();
+              flash("success", "Questionário: " + quizForm.get().name + " foi atualizado");
+              txn.commit();
             }
         } finally {
             txn.end();
         }
         return redirect(routes.QuizController.index());
 	}
-	
+
 	public Result deletar(Long id) {
 		Quiz campus = Quiz.find.byId(id);
 		if(campus==null){

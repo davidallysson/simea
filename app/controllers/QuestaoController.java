@@ -1,5 +1,9 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
+import com.avaje.ebean.Transaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +43,13 @@ public class QuestaoController extends Controller {
 	public Result formulario() {
 		List<Quiz> quiz = Quiz.find.findList();
 		List<Eixo> eixos = Eixo.find.findList();
-        return ok(views.html.Questao.formulario.render(formFactory.form(Questao.class),eixos,quiz));
+    return ok(views.html.Questao.formulario.render(formFactory.form(Questao.class),eixos,quiz));
 	}
 
 	@Permissao("Administrador")
 	public Result cadastrar() {
 		List<Quiz> quiz = Quiz.find.findList();
 		List<Eixo> eixos = Eixo.find.findList();
-		List<String> alternativas = new ArrayList<String>();
 		Form<Questao> questaoForm = formFactory.form(Questao.class).bindFromRequest();
 		Long idEixo = Long.valueOf(questaoForm.data().get("idEixo"));
 		Long idQuiz = Long.valueOf(questaoForm.data().get("idQuiz"));
@@ -78,43 +81,73 @@ public class QuestaoController extends Controller {
 	}
 
 	public Result formularioEdicao(Long id) {
-//		Campus campus = Campus.find.byId(id);
-//		Form<Campus> campusForm = formFactory.form(Campus.class).fill(campus);
-//	    return ok(views.html.Campus.formularioEdicao.render(campusForm, campus));
-		return TODO;
+		List<Quiz> quiz = Quiz.find.findList();
+		List<Eixo> eixos = Eixo.find.findList();
+		Questao questao = Questao.find.byId(id);
+		Form<Questao> questaoForm = formFactory.form(Questao.class).fill(questao);
+		List<Answer> alternativas = questao.getAnswers();
+	  return ok(views.html.Questao.formularioEdicao.render(questaoForm, questao, eixos, quiz, alternativas));
 	}
 
 	public Result editar(Long id) {
-//		Campus campus = Campus.find.byId(id);
-//		Form<Campus> campusForm = formFactory.form(Campus.class).bindFromRequest();
-//        if(campusForm.hasErrors()) {
-//            return badRequest(views.html.Campus.formularioEdicao.render(campusForm,campus));
-//        }
-//        Transaction txn = Ebean.beginTransaction();
-//        try {
-//            Campus campusEdicao = Campus.find.byId(id);
-//            if (campusEdicao != null) {
-//                Campus novoCampus = campusForm.get();
-//                campusEdicao.nome = novoCampus.nome;
-//                campusEdicao.update();
-//                flash("success", "Campus " + campusForm.get().nome + " foi atualizado");
-//                txn.commit();
-//            }
-//        } finally {
-//            txn.end();
-//        }
-//        return redirect(routes.CampusController.index());
-		return TODO;
+		Questao questao = Questao.find.byId(id);
+		List<Quiz> quiz = Quiz.find.findList();
+		List<Eixo> eixos = Eixo.find.findList();
+		List<Answer> alternativas = questao.getAnswers();
+		Form<Questao> questaoForm = formFactory.form(Questao.class).bindFromRequest();
+		Long idEixo = Long.valueOf(questaoForm.data().get("idEixo"));
+		Long idQuiz = Long.valueOf(questaoForm.data().get("idQuiz"));
+    if(questaoForm.hasErrors()) {
+      return badRequest(views.html.Questao.formularioEdicao.render(questaoForm, questao, eixos, quiz, alternativas));
+    }
+    Transaction txn = Ebean.beginTransaction();
+    try {
+				Questao questaoEdicao = Questao.find.byId(id);
+				if (questaoEdicao != null) {
+						Questao novoQuestao = questaoForm.get();
+						questaoEdicao.pergunta = novoQuestao.pergunta;
+						questaoEdicao.alternativa1 = novoQuestao.alternativa1;
+						questaoEdicao.alternativa2 = novoQuestao.alternativa2;
+						questaoEdicao.alternativa3 = novoQuestao.alternativa3;
+						questaoEdicao.alternativa4 = novoQuestao.alternativa4;
+						questaoEdicao.eixo = Eixo.find.byId(idEixo);
+						questaoEdicao.quiz = Quiz.find.byId(idQuiz);
+						questaoEdicao.usuario = InformacoesUsuarioHelper.getUsuarioLogado();
+						// questaoEdicao.status = true;
+						questaoEdicao.update();
+
+						alternativas.get(0).answer = novoQuestao.alternativa1;
+						alternativas.get(0).update();
+
+						alternativas.get(1).answer = novoQuestao.alternativa2;
+						alternativas.get(1).update();
+
+						alternativas.get(2).answer = novoQuestao.alternativa3;
+						alternativas.get(2).update();
+
+						alternativas.get(3).answer = novoQuestao.alternativa4;
+						alternativas.get(3).update();
+
+            flash("success", "Questao \"" + questaoEdicao.pergunta + "\" foi atualizado");
+          	txn.commit();
+           }
+  	} finally {
+        txn.end();
+    }
+    return redirect(routes.QuestaoController.index());
 	}
 
 	public Result deletar(Long id) {
-		// Questao questao = Questao.find.byId(id);
-		// if(questao==null){
-		// 	flash().put("error", "A Questao informada não foi encontrada no Sistema.");
-		// }else{
-		// 	Questao.find.ref(id).delete();
-		// }
-		// return redirect(routes.QuestaoController.index());
-		return TODO;
+		Questao questao = Questao.find.byId(id);
+		List<Answer> alternativas = questao.getAnswers();
+		if (questao==null) {
+			flash().put("error", "A Questao informada não foi encontrada no Sistema.");
+		} else {
+				for (Answer alternativa : alternativas) {
+						Answer.find.ref(alternativa.getId()).delete();
+				}
+				Questao.find.ref(id).delete();
+		}
+		return redirect(routes.QuestaoController.index());
 	}
 }

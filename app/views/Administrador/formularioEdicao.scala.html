@@ -1,13 +1,13 @@
-@(alunoForm: Form[Usuario], aluno: Usuario, turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus])
+@(administradorForm: Form[Usuario], administrador: Usuario, turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus])
 
 @base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
-    @utils.panel("Aluno"){
+    @utils.panel("Administrador"){
         <div class="x_content">
             <br>
-            @helper.form(action = controllers.routes.AlunoController.editar(aluno.id), 'class -> "form-horizontal form-label-left" , 'id -> "editAluno" ) {
-         		@utils.formInput("Nome:","nome", aluno.nome)
-       			@utils.formInput("E-mail:","email", aluno.email)
-       			@utils.formInput("Matricula:","matricula", aluno.matricula)
+            @helper.form(action = controllers.routes.AdministradorController.editar(administrador.id), 'class -> "form-horizontal form-label-left" , 'id -> "editAdministrador" ) {
+         		@utils.formInput("Nome:","nome", administrador.nome)
+       			@utils.formInput("E-mail:","email", administrador.email)
+       			@utils.formInput("Matricula:","matricula", administrador.matricula)
        			<div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha:</label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
@@ -23,13 +23,13 @@
                           <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
 	                            <option selected hidden>Escolha uma opcao</option>
 	                            @for(campi <- campus) {
-							 		 <option value="@campi.id">@campi.nome</option>
-								}
+              							 		 <option value="@campi.id">@campi.nome</option>
+              								}
                           </select>
                       </div>
                  </div>
 
-				<div class="form-group" id="idDiretoria_field">
+				         <div class="form-group" id="idDiretoria_field">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >

@@ -1,4 +1,4 @@
-SIMEA v0.1
+SIMEA v0.2
 =================================
 
 O Sistema de Monitoramento de Evasão Escolar (SIMEA) possui como objetivo reduzir os índices de evasão das escolas e universidades brasileiras.

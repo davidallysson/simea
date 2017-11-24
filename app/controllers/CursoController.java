@@ -32,14 +32,6 @@ public class CursoController extends Controller {
 		return ok(views.html.Curso.index.render(cursos));
 	}
 
-	public Result visualizar(Long id) {
-		/*
-		CategoriaPergunta curso = CategoriaPergunta.find.byId(id);
-		return ok(views.html.Cursos.visualizar.render(curso));
-		*/
-		return TODO;
-	}
-
 	@Permissao("Administrador")
 	public Result formulario() {
 		List<Campus> campus = Campus.find.findList();
@@ -87,8 +79,8 @@ public class CursoController extends Controller {
         try {
             Curso cursoEdicao = Curso.find.byId(id);
             if (cursoEdicao != null) {
-                Curso novoDiretoria = cursoForm.get();
-                cursoEdicao.nome = novoDiretoria.nome;
+                Curso novoCurso = cursoForm.get();
+                cursoEdicao.nome = novoCurso.nome;
                 cursoEdicao.campus = Campus.find.byId(idCampus);
                 cursoEdicao.diretoria = Diretoria.find.byId(idDiretoria);
                 cursoEdicao.update();

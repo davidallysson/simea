@@ -20,7 +20,7 @@ import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
 
 /**
- * 
+ *
  * @author Alessandro
  *
  */
@@ -30,66 +30,66 @@ public class Usuario extends Model {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long id;
-	
+
 	@Required(message = "O campo deve ser preenchido.")
 	public String nome;
-	
+
 	@Required(message = "O campo deve ser preenchido.")
-	@MinLength(value=12, message="Matrícula inválida.")
+	@MinLength(value=6, message="Matrícula inválida.")
 	public String matricula;
-	
+
 	@Required(message="O campo deve ser preenchido.")
 	@Column(unique=true)
 	@Email(message="Você deve informar um email válido.")
 	public String email;
-	
+
 	@Required(message="O campo deve ser preenchido.")
 	@MinLength(value=6, message="A senha deve conter no mínimo 6 caracteres.")
 	public String password;
-	
+
 	public boolean isAdministrador;
-	
+
 	public boolean isSupervisor;
-	
+
 	public String chaveRedefinicaoSenha;
-	
+
 	public boolean ativo;
-	
+
 	public String entrou;
-	
+
 	public boolean masculino;
-	
+
 	public boolean feminino;
-	
+
 	public int faixaEtaria;
-	
+
 	public int estadoCivil;
 
 	public int raca;
-	
+
 	public int renda;
-	
+
 	public String telefone;
-	
+
 	@OneToMany
 	public List<Questao> questoes;
-	
+
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="usuario")
 	@JsonManagedReference
 	public List<PontuacaoEvasao> pontuacaoEvasao;
-	
+
 	@ManyToOne
 	public Campus campus;
-	
+
 	@ManyToOne
 	public Diretoria diretoria;
-	
+
 	@ManyToOne
 	public Curso curso;
-	
+
 	@ManyToOne
 	public Turma turma;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -275,10 +275,10 @@ public class Usuario extends Model {
 	}
 
 	public static Finder<Long, Usuario> find = new Finder<Long,Usuario>(Usuario.class);
-	
+
 	/**
      * Método responsável por verificar se o usuário e senha conferem no banco de dados.
-	 * @throws NoSuchAlgorithmException 
+	 * @throws NoSuchAlgorithmException
      */
     public static Usuario autenticar(String login, String senha) throws NoSuchAlgorithmException {
         return find.where()
@@ -286,5 +286,5 @@ public class Usuario extends Model {
             .eq("password", senha)
             .findUnique();
     }
-	
+
 }

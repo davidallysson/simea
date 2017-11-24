@@ -1,22 +1,264 @@
-@(administradores: Form[Usuario])
+@(administradores: Form[Usuario], turmas: List[Turma], cursos: List[Curso], diretorias: List[Diretoria], campus: List[Campus])
 
+@import controllers.routes.javascript._
 @import helpers.Seguranca.InformacoesUsuarioHelper._
 
+@import helper._
+
 @base("SIMEA - Sistema de Monitoramento de Evasão de Alunos", "", extraScripts= Html("")){
-    @utils.panel("Administradores"){
+    @utils.panel("Administrador"){
         <div class="x_content">
             <br>
             @helper.form(action = controllers.routes.AdministradorController.cadastrar(), 'class -> "form-horizontal form-label-left" , 'id -> "editAdministrador" ) {
 
-       			@utils.formInput("Administrador:","nome")
+              @utils.formInput("Nome:","nome")
+         			@utils.formInput("E-mail:","email")
+         			@utils.formInput("Matricula:","matricula")
+         			@utils.formInput("Telefone:","telefone")
+         		@*
+         			- Telefone:
+         			- Celular:
+         		*@
+         			@utils.formInput("Telefone:","telefone")
+         			<div class="form-group">
+         			<label class="control-label col-md-3 col-sm-3 col-xs-12">Sexo:</label>
+         			<br>
+  		       			@inputRadioGroup(
+  							administradores("idGenero"),
+  							options = options("M"->"Masculino","F"->"Feminino"),
+  							'_label -> "",
+  							'_error -> administradores("idGenero").error.map(_.withMessage("Informe seu gênero")))
 
-           		<div class="ln_solid"></div>
-                <div class="form-group">
+         			</div>
+         			<div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Senha:</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <input type="password" class="form-control" id="password" name="password" required pattern="\w{6,}">
+                      <span class="alert alert-secondary" role="alert">
+                        A senha deverá conter no mínimo 6 caracteres.
+                      </span>
+                    </div>
+              </div>
+              <div class="form-group" id="idFaixaEtaria_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Faixa Etária:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idFaixaEtaria" id="idFaixaEtaria" >
+                             <option selected hidden>Escolha uma opcao</option>
+                             <option value="1">15 a 19 anos</option>
+                              <option value="2">20 a 24 anos</option>
+                               <option value="3">25 a 29 anos</option>
+                                <option value="4">30 a 34 anos</option>
+                                 <option value="5">35 a 39 anos</option>
+                                 <option value="6">40 ou mais</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="form-group" id="idEstadoCivil_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Estado Civil:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idEstadoCivil" id="idEstadoCivil" >
+                             <option selected hidden>Escolha uma opcao</option>
+                             <option value="1">Solteiro</option>
+                              <option value="2">Casado</option>
+                               <option value="3">Divorciado</option>
+                                <option value="4">Separado</option>
+                                 <option value="5">Viúvo</option>
+                        </select>
+                    </div>
+               </div>
+                <div class="form-group" id="idRaca_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Raça/cor:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idRaca" id="idRaca" >
+                             <option selected hidden>Escolha uma opcao</option>
+                             <option value="1">Branca</option>
+                              <option value="2">Preta</option>
+                               <option value="3">Parda</option>
+                                <option value="4">Amarela</option>
+                                 <option value="5">Indigina</option>
+                                  <option value="5">Sem Declaracao</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="form-group" id="idRenda_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Renda Familiar:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idRenda" id="idRenda" >
+                             <option selected hidden>Escolha uma opcao</option>
+                             <option value="1">Até 1 Salário mínimo</option>
+                              <option value="2">De 1 a 3 salários mínimos</option>
+                               <option value="3">De 4 a 6 salários mínimos</option>
+                                <option value="4">De 7 a 9 salários mínimos</option>
+                                 <option value="5">10 ou mais salários mínimos</option>
+                        </select>
+                    </div>
+               </div>
+			         <div class="form-group" id="idCampus_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idCampus" id="idCampus" onchange="configureDropDownLists(this,document.getElementById('idDiretoria'))">
+                            <option selected hidden>Escolha uma opcao</option>
+                            @for(campi <- campus) {
+            							 		 <option value="@campi.id">@campi.nome</option>
+            								}
+                        </select>
+                    </div>
+               </div>
+
+               <div class="form-group" id="idDiretoria_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Diretoria:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idDiretoria" id="idDiretoria" onchange="configureDropDownListsCursos(this,document.getElementById('idCurso'))" >
+                            <option selected hidden>Escolha uma opcao</option>
+                        </select>
+                    </div>
+               </div>
+
+               <div class="form-group" id="idCurso_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Curso:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idCurso" id="idCurso"  onchange="configureDropDownListsTurmas(this,document.getElementById('idTurma'))" >
+                            <option selected hidden>Escolha uma opcao</option>
+                        </select>
+                    </div>
+               </div>
+
+               <div class="form-group" id="idTurma_field">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Turma:</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="idTurma" id="idTurma">
+                            <option selected hidden>Escolha uma opcao</option>
+                        </select>
+                    </div>
+               </div>
+             	 <div class="ln_solid"></div>
+               <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         <button type="submit" class="btn btn-success">Salvar</button>
+                        <a href="@routes.HomeController.homeIndex" class="btn">Cancelar</a>
                     </div>
-                </div>
-            }
+               </div>
+              }
         </div>
     }
 }
+
+<script type="text/javascript" src="@routes.CursoController.javascriptRoutes"></script>
+<script type="text/javascript">
+
+var plus = function() {
+    var num1 = $('#num1').val();
+    var num2 = $('#num2').val();
+
+    jsRoutes.controllers.DiretoriaController.index(ddl1.value).ajax({
+      success: function(data) {
+        $("#result").html(data);
+      },
+      error: function() {
+        alert("Error!")
+      }
+    })
+  };
+
+ function configureDropDownLists(ddl1,ddl2) {
+	 this.idDiretoria.options.length=0;
+	  var colours = new Array('Black', 'White', 'Blue');
+	 jsRoutes.controllers.DiretoriaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, " ---- Escolha uma diretoria ----", "0");
+            for (i = 0; i < data.length; i++) {
+                createOption(ddl2, data[i].nome, data[i].id);
+            }
+
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+
+        var shapes = new Array('Square', 'Circle', 'Triangle');
+        var names = new Array('John', 'David', 'Sarah');
+
+    }
+
+ function configureDropDownListsCursos(ddl1,ddl2) {
+	 this.idCurso.options.length=0;
+	 console.log("test Cursos");
+	 jsRoutes.controllers.CursoController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha um curso ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+ function configureDropDownListsTurmas(ddl1,ddl2) {
+	 this.idTurma.options.length=0;
+	 console.log("test List Turmas");
+	 jsRoutes.controllers.TurmaController.get(ddl1.value).ajax({
+	      success: function(data) {
+	        console.log(data);
+	        ddl2.options.length = 0;
+
+	        //Criando um vazio
+	        createOption(ddl2, "---- Escolha uma turma ----", "0");
+           for (i = 0; i < data.length; i++) {
+               createOption(ddl2, data[i].nome, data[i].id);
+           }
+
+	      },
+	      error: function() {
+	        alert("Error!")
+	      }
+	    });
+   }
+
+
+    function pop() {
+     var dop = document.getElementById("ddl3").value;
+     alert(dop);
+    }
+
+    function createOption(ddl, text, value) {
+        var opt = document.createElement('option');
+        opt.value = value;
+        opt.text = text;
+        ddl.options.add(opt);
+    }
+
+$(document).ready(function(){
+	$(".navbar .nav:nth-child(1) > li:nth-child(2)").addClass("active");
+
+	$('#formulario').bind('submit', function() {
+		$('#formulario').showLoading();
+	});
+
+	$('#formularioDuvida').bind('submit', function() {
+		$('#formularioDuvida').showLoading();
+	});
+
+	$("#btnEnviarDuvida").click(function(){
+		$("#modalEnviarDuvida").modal();
+	});
+
+	$("#btnLimpar").click(function(){
+		var estruturaMetodoProposto = $("#estruturaMetodoProposto").val();
+
+		$("#resposta").val(estruturaMetodoProposto);
+	});
+});
+</script>
