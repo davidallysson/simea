@@ -29,7 +29,7 @@ public class EixoController extends Controller {
 		List<Eixo> eixo = Eixo.find.findList();
 		return ok(views.html.Eixo.index.render(eixo));
 	}
-	
+
 	@Permissao("Administrador")
 	public Result formulario() {
         return ok(views.html.Eixo.formulario.render(formFactory.form(Eixo.class)));
@@ -85,7 +85,7 @@ public class EixoController extends Controller {
 	}
 
 	public Result get() {
-		List<Eixo> eixo = Eixo.find.where().findList();
+		List<Eixo> eixo = Eixo.find.findList();
 		return ok(play.libs.Json.toJson(eixo));
 	}
 }

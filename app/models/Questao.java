@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -48,6 +49,7 @@ public class Questao extends Model{
 	public Usuario usuario;
 
 	@ManyToOne
+	// @JsonIgnore
 	@JsonBackReference
 	public Eixo eixo;
 

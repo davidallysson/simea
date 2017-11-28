@@ -9,9 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * 
+ *
  * @author Alessandro
  *
  */
@@ -21,11 +22,12 @@ public class Eixo extends Model {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long id;
-	
+
 	public String nome;
-	
+
 	@OneToMany
+	@JsonManagedReference
 	public List<Questao> questoes;
-	
+
 	public static Finder<Long, Eixo> find = new Finder<Long,Eixo>(Eixo.class);
 }
