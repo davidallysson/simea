@@ -72,6 +72,7 @@ public class Usuario extends Model {
 	public String telefone;
 
 	@OneToMany
+	@JsonManagedReference
 	public List<Questao> questoes;
 
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="usuario")

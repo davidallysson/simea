@@ -49,7 +49,6 @@ public class Questao extends Model{
 	public Usuario usuario;
 
 	@ManyToOne
-	// @JsonIgnore
 	@JsonBackReference
 	public Eixo eixo;
 

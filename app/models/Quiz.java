@@ -14,6 +14,8 @@ import com.avaje.ebean.Model;
 
 import play.data.format.*;
 import play.data.validation.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * 	A alternativa a) terá 1 ponto, a b) terá 2 pontos, a c) 3 pontos e a d) 4 pontos.
 	A primeira opção marcada terá peso 4, a segunda opção marcada terá peso 3.
@@ -31,27 +33,28 @@ public class Quiz extends Model {
 	@Constraints.Min(10)
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long id;
-	
+
 	@Constraints.Required
 	public String name;
-	
+
 	public boolean active = false;
-	
+
 	// zur Messung der Beliebtheit eines Quiz
 	public int popCounter;
-	
+
 	@Constraints.Max(3)
 	public int difficulty;
-	
+
 	@Formats.DateTime(pattern="dd-MM-yyyy")
 	public Date start = new Date();
-	
+
 	@Formats.DateTime(pattern="dd-MM-yyyy")
 	public Date fim = new Date();
-	
+
 	@ManyToOne
+	@JsonBackReference
 	public Usuario creator;
-	
+
 	/*
 	 * Weil eine eigene Entität Wissenskategorie allein aus einem String
 	 * bestünde, haben wir darauf verzichtet und verlagern die Kategorie
@@ -59,7 +62,7 @@ public class Quiz extends Model {
 	 */
 	@Constraints.Required
 	public String category;
-	
+
 	public static Finder<Long, Quiz> find = new Finder<Long,Quiz>(Quiz.class);
 
 	public Quiz(String name, int difficulty,Date start, Date end, Usuario creator, String category) {
@@ -76,27 +79,27 @@ public class Quiz extends Model {
 		this.creator = creator;
 		this.category = category;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isActive() {
 		return active;
 	}
-	
+
 	public void setActive(boolean val) {
 		active = val;
 	}
-	
+
 	public Date getStart() {
 		return start;
 	}
-	
+
 	public Date getEnd() {
 		return fim;
 	}
@@ -105,31 +108,31 @@ public class Quiz extends Model {
 		Date today = cal.getTime();
 		return (start.compareTo(today) <= 0);
 	}
-	
+
 	public Questao findQuestion(Solution solution, Long idQuestion ) {
-		//List<Question> s = Question.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList(); 
+		//List<Question> s = Question.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList();
 	    return Questao.find.where().eq("solutions.id", solution.id).eq("id", idQuestion).findUnique();
 	}
-	
+
 	public List<Questao> findQuestions(Solution solution) {
-		//List<Question> s = Question.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList(); 
+		//List<Question> s = Question.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList();
 	    return Questao.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList();
 	}
-	
-	
+
+
 	public int getTotalQuestions() {
 		List<Questao> s = Questao.find.orderBy().asc("pergunta").where().eq("quiz", this).findList();
 		return s.size();
 	}
-	
+
 	public int getTotalRestante(Solution solution) {
 		List<Questao> questions = Questao.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList();
 		return questions.size();
 	}
-	
+
 	public static void removeQuestion(Long solutionId, Long questionId) {
 	    List<Solution> solutions = Solution.find.setId(solutionId).fetch("questions").findList();
-	    
+
 	    for (Solution solution : solutions) {
 	    	if (solution.questions.contains(Questao.find.ref(questionId))){
 	    		solution.questions.remove(Questao.find.ref(questionId));
@@ -138,14 +141,14 @@ public class Quiz extends Model {
 	    	}
 		}
 	}
-	
-	
+
+
 	/*
 	public List<Question> getQuestions3(Solution solution, int idQuestion) {
 		Solution s = Solution.find.byId(solution.id);
-		
+
 		Question aquestio = Question.find.where().eq("solutions.id", solution.id).eq("question_id", idQuestion).findUnique();
-		
+
 		for (Question questao : s.questions) {
 			if(questao.id == idQuestion)
 			{
@@ -162,7 +165,7 @@ public class Quiz extends Model {
 		Random gerador = new Random();
 		Calendar lCDateTime = Calendar.getInstance();
 		int aletorio = (int)(lCDateTime.getTimeInMillis() % (questions2.size() + 1));
-		     
+
 		List<Questao> questions = Questao.find.orderBy().asc("id").where().eq("solutions.id", solution.id).findList();
 		while (questions2.size() < questions.size()) {
 			Questao que = questions.get(gerador.nextInt(questions.size()));
@@ -174,7 +177,7 @@ public class Quiz extends Model {
 	}
 	public List<Questao> getQuestions(Long idSolution) {
 		Solution s = Solution.find.byId(idSolution);
-	    
+
 	    if(s.firstQuestionShow == true){
 	    	s.questions =  new HashSet<Questao>();;
 	    	List<Questao> questions = Questao.find.orderBy().asc("question").where().eq("quiz", this).findList();
@@ -186,17 +189,17 @@ public class Quiz extends Model {
 	    	s.update();
 	    	return questions;
 	    } else {
-	    	
-	    	
+
+
 	    	List<Questao> questions2 = new ArrayList<Questao>();
 	    	for (Questao subset : s.questions) {
 	    		questions2.add(subset);
-	    	} 
+	    	}
 	    	return questions2;
 	    }
-	    
+
 		//imprime sequência de 10 números inteiros aleatórios entre 0 e 25
-	    
+
 	    /*
 	    for (int i = 0; i < 2; i++) {
 	    	Question q = questions.get(gerador.nextInt(questions.size()));
@@ -208,8 +211,8 @@ public class Quiz extends Model {
 		 }
 	    */
 	    /*
-	   
-	    
+
+
 	    while (questionsFinais.size() < 5) {
 	    	System.out.println("Soreteado: "+ gerador.nextInt(5));
 	    	Question q = questions.get(gerador.nextInt(5));
@@ -217,7 +220,7 @@ public class Quiz extends Model {
 	    		questionsFinais.add(q);
 	    	}
 		}
-	   
+
 	  //Ordenando
 	    Collections.sort(questionsFinais, new Comparator<Question>() {
 	            @Override
@@ -226,15 +229,15 @@ public class Quiz extends Model {
 	                return  pessoa1.id.compareTo(pessoa2.id);
 	            }
 	        });
-	    
+
 	    return questionsFinais;
 	    */
 	}
-	
+
 	public static List<Quiz> getQuizByCategoryAndDifficulty(String category, int difficulty) {
 		return Quiz.find.where().eq("category", category).eq("difficulty", difficulty).findList();
 	}
-	
+
 	public Usuario getCreator() {
 		return creator;
 	}
@@ -242,5 +245,5 @@ public class Quiz extends Model {
 	public int getDifficulty() {
 		return difficulty;
 	}
-	
+
 }
