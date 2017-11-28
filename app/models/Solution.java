@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Model.Finder;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
@@ -68,6 +69,7 @@ public class Solution extends Model {
 	@JsonBackReference
 	public Quiz quiz;
 
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<Questao> questions;
 
