@@ -14,7 +14,7 @@ import com.avaje.ebean.Model;
 
 import play.data.format.*;
 import play.data.validation.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * 	A alternativa a) terá 1 ponto, a b) terá 2 pontos, a c) 3 pontos e a d) 4 pontos.
